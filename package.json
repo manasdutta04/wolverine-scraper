@@ -1,0 +1,19 @@
+{
+  "name": "wolverine-scraper",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Self-healing price and stock tracker for niche electronics stores.",
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "scrape": "node pipeline/run.js",
+    "heal": "node heal/heal.js",
+    "web:dev": "npm run dev --prefix web",
+    "web:build": "npm run build --prefix web"
+  },
+  "dependencies": {
+    "better-sqlite3": "^12.2.0"
+  }
+}
