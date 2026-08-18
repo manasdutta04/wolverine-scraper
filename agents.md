@@ -34,10 +34,10 @@ Fields to extract per product: name, price, stock status (in stock /
 out of stock / backorder), product URL.
 
 ## Collector IDs (pin as soon as created — do not regenerate)
-- adafruit: c_TBD
-- sparkfun: c_TBD
-- pimoroni: c_TBD
-- thepihut: c_TBD
+- adafruit: c_msyvm0ar1gznj2dlrq
+- sparkfun: c_msywbl7b18fsthmxn
+- pimoroni: c_msywj65f19rulm4cua
+- thepihut: c_msyx5sb61lfwvvvspd
 
 ## Rules for the agent
 1. Confirm target URLs (specific category/product-listing pages) with
@@ -74,13 +74,13 @@ out of stock / backorder), product URL.
    to the human instead of proceeding.
 
 ## Current status
-- [ ] Bright Data account created, CLI logged in (`bdata login`)
-- [ ] Store target URLs confirmed (specific category pages, not just
+- [x] Bright Data account created, CLI logged in (`bdata login`)
+- [x] Store target URLs confirmed (specific category pages, not just
       homepages)
-- [ ] Scraper: adafruit created & test-run
-- [ ] Scraper: sparkfun created & test-run
-- [ ] Scraper: pimoroni created & test-run
-- [ ] Scraper: thepihut created & test-run
+- [x] Scraper: adafruit created & test-run
+- [x] Scraper: sparkfun created & test-run
+- [x] Scraper: pimoroni created & test-run
+- [x] Scraper: thepihut created & test-run
 - [ ] pipeline script: run all -> parse -> write to SQLite
 - [ ] GitHub Actions workflow: scheduled run (cron)
 - [ ] GitHub Actions workflow: auto-heal step on failed/empty fields
