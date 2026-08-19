@@ -216,8 +216,41 @@ select {
   color: var(--muted);
 }
 
+.search {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 16px;
+  border-bottom: 1px solid var(--line);
+}
+
+.search .kicker {
+  font-family: "Azeret Mono", monospace;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  color: var(--muted);
+  text-transform: uppercase;
+}
+
+.search input {
+  flex: 1;
+  min-width: 0;
+  background: var(--void);
+  border: 1px solid var(--line);
+  color: var(--bone);
+  font-family: "Azeret Mono", monospace;
+  font-size: 13px;
+  padding: 8px 10px;
+}
+
+.search input:focus {
+  outline: 1px solid var(--brass);
+  border-color: var(--brass);
+}
+
 .table-wrap {
-  overflow-x: auto;
+  overflow: auto;
+  max-height: 62vh;
 }
 
 table {

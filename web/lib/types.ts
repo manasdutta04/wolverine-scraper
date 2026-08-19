@@ -1,10 +1,12 @@
 export type Snapshot = {
   id: number;
   store: string;
-  product_name: string | null;
-  price: string | null;
-  stock: string | null;
-  url: string | null;
+  product_name: string;
+  price: number | null;
+  currency: string;
+  stock_status: string | null;
+  stock_status_raw: string | null;
+  product_url: string | null;
   scraped_at: string;
 };
 

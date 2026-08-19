@@ -3,7 +3,12 @@ import path from "node:path";
 import Database from "better-sqlite3";
 import type { DashboardData, Snapshot } from "./types";
 
-const dbPath = path.resolve(process.cwd(), "..", "db", "wolverine.sqlite");
+const dbPath = path.resolve(process.cwd(), "..", "db", "wolverine.db");
+
+const SNAPSHOT_COLS = `
+  s.id, s.store, s.product_name, s.price, s.currency,
+  s.stock_status, s.stock_status_raw, s.product_url, s.scraped_at
+`;
 
 export function loadDashboardData(): DashboardData {
   if (!fs.existsSync(dbPath)) {
@@ -15,7 +20,7 @@ export function loadDashboardData(): DashboardData {
     const current = db
       .prepare(
         `
-        SELECT s.id, s.store, s.product_name, s.price, s.stock, s.url, s.scraped_at
+        SELECT ${SNAPSHOT_COLS}
         FROM snapshots s
         INNER JOIN (
           SELECT store, MAX(scraped_at) AS scraped_at
@@ -32,9 +37,9 @@ export function loadDashboardData(): DashboardData {
     const history = db
       .prepare(
         `
-        SELECT id, store, product_name, price, stock, url, scraped_at
-        FROM snapshots
-        ORDER BY scraped_at ASC, id ASC
+        SELECT ${SNAPSHOT_COLS}
+        FROM snapshots s
+        ORDER BY s.scraped_at ASC, s.id ASC
       `,
       )
       .all() as Snapshot[];
