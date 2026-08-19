@@ -175,3 +175,10 @@ Every entry is a real Scraper Studio heal. Failed attempts stay in this file.
   ```
 - confirmation: 662 products (listing coverage dropped vs 836). **0/662 missing price.** Stock is a clean enum on every row: `{in stock: 276, out of stock: 74, unknown: 312}`. No leftover variant-blob stock strings.
 
+
+## 2026-08-19T16:03:58.790Z — SIMULATED TEST RUN (not a real site failure)
+- collector: `c_msywbl7b18fsthmxn` (sparkfun)
+- what broke: SIMULATED fixture (cloned $739.95 / backorder). Detection: sparkfun: 100.0% of rows share price=739.95 stock=backorder (20/20) — extraction looks locked onto one element
+- **label: SIMULATED TEST RUN** — fixture data only; not a live site failure
+- heal prompt: `SparkFun listing scrape looks broken: sparkfun: 100.0% of rows share price=739.95 stock=backorder (20/20) — extraction looks locked onto one element. Re-extract each product card's own name, numeric price, currency, stock status, and URL. Do not reuse one price/stock node for every row.`
+- outcome: simulated fixture, heal call attempted, studio confirmed no live extraction issue (preview still had distinct per-card prices); rejected the proposal so the live collector is unchanged
