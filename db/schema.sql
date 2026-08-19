@@ -1,13 +1,11 @@
--- Timestamped scrape snapshots. Price/stock stay TEXT so mixed
--- currencies and statuses ("In stock", "53 in stock", "Backorder")
--- survive without a premature schema bet.
 CREATE TABLE IF NOT EXISTS snapshots (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   store TEXT NOT NULL,
-  product_name TEXT,
-  price TEXT,
-  stock TEXT,
-  url TEXT,
+  product_name TEXT NOT NULL,
+  price REAL,
+  currency TEXT DEFAULT 'USD',
+  stock_status TEXT,
+  product_url TEXT,
   scraped_at TEXT NOT NULL
 );
 

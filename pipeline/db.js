@@ -5,7 +5,7 @@ import Database from "better-sqlite3";
 
 const rootDir = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 export const dbDir = path.join(rootDir, "db");
-export const dbPath = path.join(dbDir, "wolverine.sqlite");
+export const dbPath = path.join(dbDir, "wolverine.db");
 export const schemaPath = path.join(dbDir, "schema.sql");
 
 export function openDb() {
@@ -18,8 +18,12 @@ export function openDb() {
 
 export function insertSnapshots(db, products, scrapedAt) {
   const insert = db.prepare(`
-    INSERT INTO snapshots (store, product_name, price, stock, url, scraped_at)
-    VALUES (@store, @product_name, @price, @stock, @url, @scraped_at)
+    INSERT INTO snapshots (
+      store, product_name, price, currency, stock_status, product_url, scraped_at
+    )
+    VALUES (
+      @store, @product_name, @price, @currency, @stock_status, @product_url, @scraped_at
+    )
   `);
 
   const write = db.transaction((rows) => {
@@ -28,8 +32,9 @@ export function insertSnapshots(db, products, scrapedAt) {
         store: row.store,
         product_name: row.product_name,
         price: row.price,
-        stock: row.stock,
-        url: row.url,
+        currency: row.currency,
+        stock_status: row.stock_status,
+        product_url: row.product_url,
         scraped_at: scrapedAt,
       });
     }
@@ -55,4 +60,32 @@ export function latestSnapshots(db) {
     `,
     )
     .all();
+}
+
+export function countByStore(db, scrapedAt) {
+  return db
+    .prepare(
+      `
+      SELECT store, COUNT(*) AS n
+      FROM snapshots
+      WHERE scraped_at = ?
+      GROUP BY store
+      ORDER BY store
+    `,
+    )
+    .all(scrapedAt);
+}
+
+export function sampleRows(db, scrapedAt, limit = 6) {
+  return db
+    .prepare(
+      `
+      SELECT store, product_name, price, currency, stock_status, product_url, scraped_at
+      FROM snapshots
+      WHERE scraped_at = ?
+      ORDER BY store, id
+      LIMIT ?
+    `,
+    )
+    .all(scrapedAt, limit);
 }

@@ -22,8 +22,8 @@ function appendHealLog(entry) {
 }
 
 function describeBreakage(products) {
-  const missingPrice = products.filter((p) => !p.price).length;
-  const missingStock = products.filter((p) => !p.stock).length;
+  const missingPrice = products.filter((p) => p.price == null).length;
+  const missingStock = products.filter((p) => !p.stock_status).length;
   return `${products.length} products with empty fields (${missingPrice} price, ${missingStock} stock)`;
 }
 

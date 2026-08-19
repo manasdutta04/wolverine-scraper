@@ -8,7 +8,49 @@ function firstString(record, keys) {
   return null;
 }
 
-export function normalizeProduct(record, storeId) {
+export function normalizeCurrency(raw, fallback = "USD") {
+  if (raw == null) return fallback;
+  if (typeof raw === "object") {
+    return normalizeCurrency(raw.currency ?? raw.symbol ?? raw.code, fallback);
+  }
+  const text = String(raw).trim();
+  if (!text) return fallback;
+  const pounds = (text.match(/£/g) || []).length;
+  if (pounds > 0 || /^gbp$/i.test(text)) return "GBP";
+  if (/\$/.test(text) || /^usd$/i.test(text)) return "USD";
+  if (/€/.test(text) || /^eur$/i.test(text)) return "EUR";
+  return fallback;
+}
+
+export function parsePrice(raw) {
+  if (raw == null || raw === "") return null;
+  if (typeof raw === "number") {
+    return Number.isFinite(raw) ? raw : null;
+  }
+  if (typeof raw === "object") {
+    const value = raw.value ?? raw.amount ?? raw.price;
+    return parsePrice(value);
+  }
+  const n = Number.parseFloat(String(raw).replace(/,/g, "").replace(/[^0-9.-]/g, ""));
+  return Number.isFinite(n) ? n : null;
+}
+
+export function currencyFromRecord(record, fallback = "USD") {
+  const fromPrice =
+    record?.price && typeof record.price === "object"
+      ? record.price.currency ?? record.price.symbol
+      : null;
+  return normalizeCurrency(
+    firstString(record, ["currency", "currency_code"]) ?? fromPrice,
+    fallback,
+  );
+}
+
+export function normalizeProduct(record, store) {
+  const storeId = typeof store === "string" ? store : store.id;
+  const fallbackCurrency =
+    typeof store === "string" ? "USD" : store.currency || "USD";
+
   return {
     store: storeId,
     product_name: firstString(record, [
@@ -17,46 +59,64 @@ export function normalizeProduct(record, storeId) {
       "title",
       "product",
     ]),
-    price: firstString(record, ["price", "amount", "cost"]),
-    stock: firstString(record, [
-      "stock",
+    price: parsePrice(record?.price ?? record?.amount ?? record?.cost),
+    currency: currencyFromRecord(record, fallbackCurrency),
+    stock_status: firstString(record, [
       "stock_status",
+      "stock",
       "availability",
       "in_stock",
     ]),
-    url: firstString(record, ["url", "product_url", "link", "href"]),
+    product_url: firstString(record, [
+      "product_page_url",
+      "product_url",
+      "url",
+      "link",
+      "href",
+    ]),
   };
 }
 
-export function parseBdataOutput(stdout, storeId) {
-  const text = String(stdout ?? "").trim();
-  if (!text) return [];
+function extractJsonRecords(text) {
+  const trimmed = String(text ?? "").trim();
+  if (!trimmed) return [];
 
-  const records = [];
   try {
-    const parsed = JSON.parse(text);
-    if (Array.isArray(parsed)) {
-      records.push(...parsed);
-    } else if (Array.isArray(parsed?.data)) {
-      records.push(...parsed.data);
-    } else if (parsed && typeof parsed === "object") {
-      records.push(parsed);
-    }
+    const parsed = JSON.parse(trimmed);
+    if (Array.isArray(parsed)) return parsed;
+    if (Array.isArray(parsed?.data)) return parsed.data;
+    if (parsed && typeof parsed === "object") return [parsed];
   } catch {
-    for (const line of text.split(/\r?\n/)) {
-      const trimmed = line.trim();
-      if (!trimmed) continue;
+    const start = trimmed.search(/[\[{]/);
+    if (start >= 0) {
       try {
-        records.push(JSON.parse(trimmed));
+        const parsed = JSON.parse(trimmed.slice(start));
+        if (Array.isArray(parsed)) return parsed;
+        if (Array.isArray(parsed?.data)) return parsed.data;
+        if (parsed && typeof parsed === "object") return [parsed];
       } catch {
-        // ignore non-JSON chatter from the CLI
+        // fall through to JSONL
       }
     }
+    const records = [];
+    for (const line of trimmed.split(/\r?\n/)) {
+      const row = line.trim();
+      if (!row) continue;
+      try {
+        records.push(JSON.parse(row));
+      } catch {
+        // ignore CLI chatter
+      }
+    }
+    return records;
   }
+  return [];
+}
 
-  return records
-    .filter((record) => record && typeof record === "object")
-    .map((record) => normalizeProduct(record, storeId));
+export function parseBdataOutput(stdout, store) {
+  return extractJsonRecords(stdout)
+    .filter((record) => record && typeof record === "object" && !Array.isArray(record))
+    .map((record) => normalizeProduct(record, store));
 }
 
 export function isMissingField(value) {
@@ -67,6 +127,19 @@ export function isMissingField(value) {
 
 export function findBrokenProducts(products) {
   return products.filter(
-    (product) => isMissingField(product.price) || isMissingField(product.stock),
+    (product) =>
+      product.price == null || isMissingField(product.stock_status),
   );
+}
+
+export function summarizeProducts(products) {
+  return {
+    rows: products.length,
+    nullPrice: products.filter((product) => product.price == null).length,
+    missingName: products.filter((product) => isMissingField(product.product_name))
+      .length,
+    unknownStock: products.filter(
+      (product) => String(product.stock_status || "").toLowerCase() === "unknown",
+    ).length,
+  };
 }

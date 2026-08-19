@@ -81,7 +81,7 @@ out of stock / backorder), product URL.
 - [x] Scraper: sparkfun created & test-run
 - [x] Scraper: pimoroni created & test-run
 - [x] Scraper: thepihut created & test-run
-- [ ] pipeline script: run all -> parse -> write to SQLite
+- [x] pipeline script: run all -> parse -> write to SQLite
 - [ ] GitHub Actions workflow: scheduled run (cron)
 - [ ] GitHub Actions workflow: auto-heal step on failed/empty fields
 - [x] heal-log.md populated with at least one real heal event
