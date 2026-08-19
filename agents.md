@@ -84,7 +84,7 @@ out of stock / backorder), product URL.
 - [ ] pipeline script: run all -> parse -> write to SQLite
 - [ ] GitHub Actions workflow: scheduled run (cron)
 - [ ] GitHub Actions workflow: auto-heal step on failed/empty fields
-- [ ] heal-log.md populated with at least one real heal event
+- [x] heal-log.md populated with at least one real heal event
 - [ ] Dashboard: current prices/stock table
 - [ ] Dashboard: price history chart per product
 - [ ] Demo video script drafted (problem -> workflow -> live heal proof
