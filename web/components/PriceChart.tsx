@@ -5,15 +5,18 @@ type Point = { x: number; y: number; label: string; price: number };
 export function PriceChart({
   title,
   points,
+  uniqueTimes,
 }: {
   title: string;
   points: Point[];
+  uniqueTimes: number;
 }) {
   const width = 920;
   const height = 240;
   const pad = { top: 28, right: 24, bottom: 36, left: 56 };
   const innerW = width - pad.left - pad.right;
   const innerH = height - pad.top - pad.bottom;
+  const oneSnapshot = uniqueTimes <= 1 && points.length >= 1;
 
   if (points.length === 0) {
     return (
@@ -22,7 +25,9 @@ export function PriceChart({
           <span>Price history</span>
           <span>no signal</span>
         </div>
-        <div className="chart-empty">Select a product after the first scrape</div>
+        <div className="chart-empty">
+          Select a product after snapshots land in SQLite
+        </div>
       </div>
     );
   }
@@ -47,6 +52,12 @@ export function PriceChart({
         <span>Price history</span>
         <span>{title}</span>
       </div>
+      {oneSnapshot ? (
+        <p className="chart-note">
+          One snapshot so far — the line fills in after the next scrape batch.
+          This dot is the live price, not a fabricated series.
+        </p>
+      ) : null}
       <svg className="chart-svg" viewBox={`0 0 ${width} ${height}`} role="img">
         <title>{title} price history</title>
         {[0, 0.5, 1].map((t) => {
@@ -74,10 +85,19 @@ export function PriceChart({
             </g>
           );
         })}
-        <path d={d} fill="none" stroke="#c9843a" strokeWidth="2.4" />
-        {mapped.map((p) => (
-          <g key={`${p.x}-${p.label}`}>
-            <circle cx={p.x} cy={p.y} r="4.5" fill="#0b0a08" stroke="#efb056" strokeWidth="2" />
+        {points.length > 1 ? (
+          <path d={d} fill="none" stroke="#c9843a" strokeWidth="2.4" />
+        ) : null}
+        {mapped.map((p, i) => (
+          <g key={`${p.x}-${p.label}-${i}`}>
+            <circle
+              cx={p.x}
+              cy={p.y}
+              r={oneSnapshot ? 7 : 4.5}
+              fill="#0b0a08"
+              stroke="#efb056"
+              strokeWidth="2"
+            />
             <text
               x={p.x}
               y={height - 12}

@@ -18,7 +18,7 @@ history, not just a staged demo).
 - Node.js for all pipeline/heal scripts (consistent with Bright Data CLI
   being an npx package)
 - Bright Data CLI (`@brightdata/cli`) for scraper create/run/heal/approve
-- SQLite for storing timestamped scrape snapshots
+- SQLite for storing timestamped scrape snapshots (`db/wolverine.db`)
 - GitHub Actions (cron) for scheduled runs + autonomous self-heal loop
 - Next.js (or plain HTML/JS) for the dashboard: current prices/stock +
   history chart per product, per store
@@ -85,8 +85,8 @@ out of stock / backorder), product URL.
 - [x] GitHub Actions workflow: scheduled run (cron)
 - [x] GitHub Actions workflow: auto-heal step on failed/empty fields
 - [x] heal-log.md populated with at least one real heal event
-- [ ] Dashboard: current prices/stock table
-- [ ] Dashboard: price history chart per product
+- [x] Dashboard: current prices/stock table
+- [x] Dashboard: price history chart per product
 - [ ] Demo video script drafted (problem -> workflow -> live heal proof
       via CI history -> product)
 - [ ] LinkedIn post drafted for Daily Bugle track

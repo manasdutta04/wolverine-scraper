@@ -10,9 +10,21 @@ export type Snapshot = {
   scraped_at: string;
 };
 
+export type HealEvent = {
+  at: string;
+  title: string;
+  store: string | null;
+  collectorId: string | null;
+  whatBroke: string | null;
+  outcome: string | null;
+  simulated: boolean;
+};
+
 export type DashboardData = {
   current: Snapshot[];
   history: Snapshot[];
   lastScrapedAt: string | null;
+  batchCount: number;
   dbExists: boolean;
+  heals: HealEvent[];
 };

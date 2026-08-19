@@ -75,6 +75,27 @@ select {
   border-bottom: 1px solid var(--line);
   padding-bottom: 22px;
   margin-bottom: 28px;
+  animation: cutin 520ms ease-out;
+}
+
+@keyframes cutin {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.eyebrow {
+  margin: 0 0 6px;
+  font-family: "Azeret Mono", monospace;
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--brass);
 }
 
 .wordmark {
@@ -250,7 +271,14 @@ select {
 
 .table-wrap {
   overflow: auto;
-  max-height: 62vh;
+  max-height: 58vh;
+}
+
+thead th {
+  position: sticky;
+  top: 0;
+  background: var(--panel-2);
+  z-index: 1;
 }
 
 table {
@@ -300,6 +328,11 @@ tr.selected td {
   border-color: color-mix(in srgb, var(--heal) 40%, var(--line));
 }
 
+.stock.wait {
+  color: var(--brass-hot);
+  border-color: color-mix(in srgb, var(--brass) 45%, var(--line));
+}
+
 .stock.out,
 .stock.broken {
   color: var(--wound);
@@ -324,8 +357,88 @@ tr.selected td {
   color: var(--muted);
 }
 
-.chart-panel {
+.chart-panel,
+.heal-panel {
   margin-top: 22px;
+}
+
+.chart-note {
+  margin: 0;
+  padding: 10px 16px 0;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.heal-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  max-height: 420px;
+  overflow: auto;
+}
+
+.heal-item {
+  padding: 14px 16px 16px;
+  border-bottom: 1px solid var(--line);
+}
+
+.heal-item:last-child {
+  border-bottom: 0;
+}
+
+.heal-item.simulated {
+  background: color-mix(in srgb, var(--brass) 7%, transparent);
+}
+
+.heal-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 12px;
+  align-items: center;
+  font-family: "Azeret Mono", monospace;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.scar {
+  border: 1px solid color-mix(in srgb, var(--heal) 40%, var(--line));
+  color: var(--heal);
+  padding: 1px 6px;
+}
+
+.scar.sim {
+  border-color: color-mix(in srgb, var(--brass) 50%, var(--line));
+  color: var(--brass-hot);
+}
+
+.heal-store {
+  color: var(--bone);
+}
+
+.heal-title {
+  margin: 8px 0 6px;
+  font-weight: 600;
+}
+
+.heal-broke,
+.heal-out {
+  margin: 0 0 4px;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.heal-out {
+  color: var(--bone);
+}
+
+.note code {
+  font-family: "Azeret Mono", monospace;
+  font-size: 11px;
+  color: var(--brass-hot);
 }
 
 .chart-svg {
@@ -363,5 +476,13 @@ tr.selected td {
   .status-stack,
   .rail {
     align-items: stretch;
+  }
+
+  .wordmark {
+    font-size: 72px;
+  }
+
+  .table-wrap {
+    max-height: 48vh;
   }
 }

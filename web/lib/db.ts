@@ -1,18 +1,27 @@
 import fs from "node:fs";
-import path from "node:path";
 import Database from "better-sqlite3";
+import { loadHealEvents } from "./heal-log";
+import { dbPath } from "./paths";
 import type { DashboardData, Snapshot } from "./types";
-
-const dbPath = path.resolve(process.cwd(), "..", "db", "wolverine.db");
 
 const SNAPSHOT_COLS = `
   s.id, s.store, s.product_name, s.price, s.currency,
   s.stock_status, s.stock_status_raw, s.product_url, s.scraped_at
 `;
 
+const empty = (): DashboardData => ({
+  current: [],
+  history: [],
+  lastScrapedAt: null,
+  batchCount: 0,
+  dbExists: false,
+  heals: loadHealEvents(),
+});
+
 export function loadDashboardData(): DashboardData {
+  const heals = loadHealEvents();
   if (!fs.existsSync(dbPath)) {
-    return { current: [], history: [], lastScrapedAt: null, dbExists: false };
+    return { ...empty(), heals };
   }
 
   const db = new Database(dbPath, { readonly: true, fileMustExist: true });
@@ -48,11 +57,17 @@ export function loadDashboardData(): DashboardData {
       .prepare(`SELECT MAX(scraped_at) AS scraped_at FROM snapshots`)
       .get() as { scraped_at: string | null };
 
+    const batches = db
+      .prepare(`SELECT COUNT(DISTINCT scraped_at) AS n FROM snapshots`)
+      .get() as { n: number };
+
     return {
       current,
       history,
       lastScrapedAt: last?.scraped_at ?? null,
+      batchCount: batches?.n ?? 0,
       dbExists: true,
+      heals,
     };
   } finally {
     db.close();

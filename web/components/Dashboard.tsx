@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import type { DashboardData, Snapshot } from "@/lib/types";
+import { HealTimeline } from "./HealTimeline";
 import { PriceChart } from "./PriceChart";
 
 const STORES = [
@@ -20,7 +21,7 @@ function stockClass(stock: string | null): string {
     case "discontinued":
       return "out";
     case "backorder":
-      return "out";
+      return "wait";
     case "unknown":
     case null:
       return "broken";
@@ -79,28 +80,38 @@ export function Dashboard({ data }: { data: DashboardData }) {
   const selected =
     visible.find((row) => productKey(row) === selectedKey) ?? visible[0];
 
-  const chartPoints = useMemo(() => {
+  const selectedHistory = useMemo(() => {
     if (!selected) return [];
-    return data.history
-      .filter((row) => {
-        if (row.store !== selected.store) return false;
-        if (selected.product_url) return row.product_url === selected.product_url;
-        return row.product_name === selected.product_name;
-      })
-      .map((row) => {
-        if (row.price == null || !Number.isFinite(row.price)) return null;
-        return {
-          x: 0,
-          y: 0,
-          price: row.price,
-          label: new Date(row.scraped_at).toLocaleDateString("en-GB", {
-            month: "short",
-            day: "numeric",
-          }),
-        };
-      })
-      .filter((p): p is NonNullable<typeof p> => p != null);
+    return data.history.filter((row) => {
+      if (row.store !== selected.store) return false;
+      if (selected.product_url) return row.product_url === selected.product_url;
+      return row.product_name === selected.product_name;
+    });
   }, [data.history, selected]);
+
+  const chartPoints = useMemo(
+    () =>
+      selectedHistory
+        .map((row) => {
+          if (row.price == null || !Number.isFinite(row.price)) return null;
+          return {
+            x: 0,
+            y: 0,
+            price: row.price,
+            label: new Date(row.scraped_at).toLocaleDateString("en-GB", {
+              month: "short",
+              day: "numeric",
+            }),
+          };
+        })
+        .filter((p): p is NonNullable<typeof p> => p != null),
+    [selectedHistory],
+  );
+
+  const uniqueTimes = useMemo(
+    () => new Set(selectedHistory.map((row) => row.scraped_at)).size,
+    [selectedHistory],
+  );
 
   const counts = Object.fromEntries(
     STORES.map((s) => [
@@ -111,10 +122,13 @@ export function Dashboard({ data }: { data: DashboardData }) {
     ]),
   );
 
+  const heals = store === "all" ? data.heals : data.heals.filter((h) => h.store === store);
+
   return (
     <div className="shell">
       <header className="mast">
         <div>
+          <p className="eyebrow">price · stock · heal</p>
           <h1 className="wordmark">Wolverine</h1>
           <p className="tag">
             It doesn&apos;t matter how badly the page gets cut up — it heals.
@@ -125,7 +139,10 @@ export function Dashboard({ data }: { data: DashboardData }) {
             heal loop {data.current.length ? "armed" : "standby"}
           </div>
           <div className="pill">last scrape {formatWhen(data.lastScrapedAt)}</div>
-          <div className="pill">{data.current.length} live rows</div>
+          <div className="pill">
+            {data.current.length} live rows · {data.batchCount || 0}{" "}
+            {data.batchCount === 1 ? "batch" : "batches"}
+          </div>
         </div>
       </header>
 
@@ -147,8 +164,9 @@ export function Dashboard({ data }: { data: DashboardData }) {
             </button>
           ))}
           <p className="note">
-            Snapshots land in SQLite after `npm run scrape`. Empty price or stock
-            trips `npm run heal`.
+            Snapshots land in <code>db/wolverine.db</code> after{" "}
+            <code>npm run scrape</code>. Empty or cloned price/stock trips{" "}
+            <code>npm run heal</code>.
           </p>
         </aside>
 
@@ -212,6 +230,7 @@ export function Dashboard({ data }: { data: DashboardData }) {
                                 href={row.product_url}
                                 target="_blank"
                                 rel="noreferrer"
+                                onClick={(e) => e.stopPropagation()}
                               >
                                 {row.product_name || "untitled"}
                               </a>
@@ -241,7 +260,10 @@ export function Dashboard({ data }: { data: DashboardData }) {
           <PriceChart
             title={selected?.product_name || "no product pinned"}
             points={chartPoints}
+            uniqueTimes={uniqueTimes}
           />
+
+          <HealTimeline events={heals} />
         </main>
       </div>
     </div>
