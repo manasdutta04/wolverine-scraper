@@ -4,6 +4,12 @@ on:
   schedule:
     - cron: "0 */6 * * *"
   workflow_dispatch:
+    inputs:
+      simulate_failure:
+        description: Store id to inject cloned-price fixture (e.g. sparkfun). Leave blank for a real scrape.
+        required: false
+        type: string
+        default: ""
 
 concurrency:
   group: wolverine-scrape
@@ -33,9 +39,15 @@ jobs:
         run: npx --yes @brightdata/cli login --api-key "$BRIGHTDATA_API_KEY"
 
       - name: Scrape all stores
+        if: ${{ github.event_name != 'workflow_dispatch' || github.event.inputs.simulate_failure == '' }}
         run: npm run scrape
 
+      - name: Simulated red-flag + heal trigger
+        if: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.simulate_failure != '' }}
+        run: npm run heal -- --simulate-failure=${{ github.event.inputs.simulate_failure }}
+
       - name: Red-flag check (heal + approve + re-run if needed)
+        if: ${{ github.event_name != 'workflow_dispatch' || github.event.inputs.simulate_failure == '' }}
         run: npm run heal
 
       - name: Upload SQLite snapshot

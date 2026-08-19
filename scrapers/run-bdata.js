@@ -56,6 +56,24 @@ export async function runBdata(subargs) {
   return stdout;
 }
 
+export async function runBdataJson(subargs) {
+  const outFile = path.join(
+    os.tmpdir(),
+    `wolverine-bdata-${Date.now()}.json`,
+  );
+  try {
+    await runBdata([...subargs, "--pretty", "--json", "-o", outFile]);
+    if (!fs.existsSync(outFile)) return {};
+    return JSON.parse(fs.readFileSync(outFile, "utf8"));
+  } finally {
+    try {
+      fs.unlinkSync(outFile);
+    } catch {
+      // ignore
+    }
+  }
+}
+
 export async function runStoreScraper(store) {
   if (!isStoreReady(store)) {
     return {
