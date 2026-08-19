@@ -1,0 +1,62 @@
+name: wolverine-scrape
+
+on:
+  schedule:
+    - cron: "0 */6 * * *"
+  workflow_dispatch:
+
+concurrency:
+  group: wolverine-scrape
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  scrape:
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    env:
+      BRIGHTDATA_API_KEY: ${{ secrets.BRIGHTDATA_API_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+
+      - name: Install
+        run: npm ci
+
+      - name: Bright Data CLI login
+        run: npx --yes @brightdata/cli login --api-key "$BRIGHTDATA_API_KEY"
+
+      - name: Scrape all stores
+        run: npm run scrape
+
+      - name: Red-flag check (heal + approve + re-run if needed)
+        run: npm run heal
+
+      - name: Upload SQLite snapshot
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: wolverine-db
+          path: |
+            db/wolverine.db
+            heal-log.md
+          if-no-files-found: warn
+
+      - name: Commit heal-log if it changed
+        if: always()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add heal-log.md
+          if git diff --staged --quiet; then
+            echo "heal-log.md unchanged"
+          else
+            git commit -m "ci: record scrape/heal audit trail"
+            git push
+          fi

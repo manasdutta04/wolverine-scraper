@@ -1,6 +1,9 @@
+import { fileURLToPath } from "node:url";
+import path from "node:path";
 import { stores } from "../scrapers/config.js";
 import { isMissingField, summarizeProducts } from "../scrapers/parse.js";
 import { runStoreScraper } from "../scrapers/run-bdata.js";
+import { withNormalizedStock } from "../scrapers/stock.js";
 import { insertSnapshots, openDb } from "./db.js";
 
 function formatSummary(store, { rows, nullPrice, unknownStock, missingName, error }) {
@@ -12,6 +15,54 @@ function formatSummary(store, { rows, nullPrice, unknownStock, missingName, erro
   return bits.join(" | ");
 }
 
+function emptySummary(store, error) {
+  return {
+    store: store.id,
+    rows: 0,
+    nullPrice: 0,
+    unknownStock: 0,
+    missingName: 0,
+    error,
+  };
+}
+
+export async function scrapeStore(store, { db, scrapedAt }) {
+  process.stdout.write(`→ ${store.name} (${store.collectorId})\n`);
+
+  try {
+    const result = await runStoreScraper(store);
+    if (result.skipped) {
+      const summary = emptySummary(store, result.reason);
+      console.log(`  ${formatSummary(store, summary)}`);
+      return { rows: [], summary };
+    }
+
+    const named = result.products.filter(
+      (product) => !isMissingField(product.product_name),
+    );
+    const rows = named.map(withNormalizedStock);
+    if (rows.length > 0) {
+      insertSnapshots(db, rows, scrapedAt);
+    }
+
+    const stats = summarizeProducts(rows);
+    const summary = {
+      store: store.id,
+      rows: rows.length,
+      nullPrice: stats.nullPrice,
+      unknownStock: stats.unknownStock,
+      missingName: result.products.length - named.length,
+      error: null,
+    };
+    console.log(`  ${formatSummary(store, summary)}`);
+    return { rows, summary };
+  } catch (err) {
+    const summary = emptySummary(store, err.message);
+    console.log(`  ${formatSummary(store, summary)}`);
+    return { rows: [], summary };
+  }
+}
+
 export async function runPipeline() {
   const scrapedAt = new Date().toISOString();
   const db = openDb();
@@ -19,59 +70,8 @@ export async function runPipeline() {
 
   try {
     for (const store of stores) {
-      process.stdout.write(`→ ${store.name} (${store.collectorId})\n`);
-      let products = [];
-      let error = null;
-
-      try {
-        const result = await runStoreScraper(store);
-        if (result.skipped) {
-          const summary = {
-            store: store.id,
-            rows: 0,
-            nullPrice: 0,
-            unknownStock: 0,
-            missingName: 0,
-            error: result.reason,
-          };
-          summaries.push(summary);
-          console.log(`  ${formatSummary(store, summary)}`);
-          continue;
-        }
-        products = result.products;
-      } catch (err) {
-        error = err.message;
-        const summary = {
-          store: store.id,
-          rows: 0,
-          nullPrice: 0,
-          unknownStock: 0,
-          missingName: 0,
-          error,
-        };
-        summaries.push(summary);
-        console.log(`  ${formatSummary(store, summary)}`);
-        continue;
-      }
-
-      const stats = summarizeProducts(products);
-      const insertable = products.filter(
-        (product) => !isMissingField(product.product_name),
-      );
-      if (insertable.length > 0) {
-        insertSnapshots(db, insertable, scrapedAt);
-      }
-
-      const summary = {
-        store: store.id,
-        rows: insertable.length,
-        nullPrice: stats.nullPrice,
-        unknownStock: stats.unknownStock,
-        missingName: stats.missingName,
-        error: null,
-      };
+      const { summary } = await scrapeStore(store, { db, scrapedAt });
       summaries.push(summary);
-      console.log(`  ${formatSummary(store, summary)}`);
     }
   } finally {
     db.close();
@@ -82,7 +82,13 @@ export async function runPipeline() {
   return { scrapedAt, summaries, total };
 }
 
-runPipeline().catch((err) => {
-  console.error(err);
-  process.exit(1);
-});
+const isMain =
+  process.argv[1] &&
+  path.resolve(fileURLToPath(import.meta.url)) === path.resolve(process.argv[1]);
+
+if (isMain) {
+  runPipeline().catch((err) => {
+    console.error(err);
+    process.exit(1);
+  });
+}

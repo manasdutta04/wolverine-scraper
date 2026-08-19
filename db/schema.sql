@@ -5,6 +5,7 @@ CREATE TABLE IF NOT EXISTS snapshots (
   price REAL,
   currency TEXT DEFAULT 'USD',
   stock_status TEXT,
+  stock_status_raw TEXT,
   product_url TEXT,
   scraped_at TEXT NOT NULL
 );

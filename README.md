@@ -14,7 +14,7 @@ Built on Bright Data Scraper Studio for the Scrape-Verse Hackathon.
 | `heal/` | Inspect empty price/stock, then heal + approve |
 | `db/` | `schema.sql` + gitignored `wolverine.sqlite` |
 | `web/` | Next.js dashboard (current table + history chart) |
-| `.github/workflows/cron.yml` | Scheduled scrape; heal on failure |
+| `.github/workflows/scrape.yml` | Scheduled scrape + auto-heal red-flag loop |
 | `heal-log.md` | Real heal events only |
 
 ## Commands

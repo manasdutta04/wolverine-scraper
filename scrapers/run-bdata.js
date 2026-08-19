@@ -41,7 +41,11 @@ function runNpx(args) {
 }
 
 function bdataArgs(subargs) {
-  return ["--yes", "@brightdata/cli", ...subargs];
+  const args = ["--yes", "@brightdata/cli"];
+  const apiKey = process.env.BRIGHTDATA_API_KEY;
+  if (apiKey) args.push("--api-key", apiKey);
+  args.push(...subargs);
+  return args;
 }
 
 export async function runBdata(subargs) {

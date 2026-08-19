@@ -9,7 +9,8 @@
   },
   "scripts": {
     "scrape": "node pipeline/run.js",
-    "heal": "node heal/heal.js",
+    "check": "node heal/check.js",
+    "heal": "node heal/check.js --fix",
     "web:dev": "npm run dev --prefix web",
     "web:build": "npm run build --prefix web"
   },

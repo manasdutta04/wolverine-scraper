@@ -13,16 +13,27 @@ export function openDb() {
   const db = new Database(dbPath);
   db.pragma("journal_mode = WAL");
   db.exec(fs.readFileSync(schemaPath, "utf8"));
+  migrate(db);
   return db;
+}
+
+function migrate(db) {
+  const cols = db.prepare("PRAGMA table_info(snapshots)").all().map((col) => col.name);
+  if (!cols.includes("stock_status_raw")) {
+    db.exec("ALTER TABLE snapshots ADD COLUMN stock_status_raw TEXT");
+  }
+  if (!cols.includes("currency")) {
+    db.exec("ALTER TABLE snapshots ADD COLUMN currency TEXT DEFAULT 'USD'");
+  }
 }
 
 export function insertSnapshots(db, products, scrapedAt) {
   const insert = db.prepare(`
     INSERT INTO snapshots (
-      store, product_name, price, currency, stock_status, product_url, scraped_at
+      store, product_name, price, currency, stock_status, stock_status_raw, product_url, scraped_at
     )
     VALUES (
-      @store, @product_name, @price, @currency, @stock_status, @product_url, @scraped_at
+      @store, @product_name, @price, @currency, @stock_status, @stock_status_raw, @product_url, @scraped_at
     )
   `);
 
@@ -34,6 +45,7 @@ export function insertSnapshots(db, products, scrapedAt) {
         price: row.price,
         currency: row.currency,
         stock_status: row.stock_status,
+        stock_status_raw: row.stock_status_raw,
         product_url: row.product_url,
         scraped_at: scrapedAt,
       });
