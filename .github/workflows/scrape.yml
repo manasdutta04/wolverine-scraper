@@ -15,7 +15,7 @@ permissions:
 jobs:
   scrape:
     runs-on: ubuntu-latest
-    timeout-minutes: 180
+    timeout-minutes: 45
     env:
       BRIGHTDATA_API_KEY: ${{ secrets.BRIGHTDATA_API_KEY }}
     steps:
