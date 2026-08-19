@@ -47,9 +47,9 @@ export async function healLastRun() {
 
   if (brokenByStore.size === 0) {
     if (latest.length === 0) {
-      console.log("no snapshots yet — nothing to heal");
+      console.log("no snapshots yet - nothing to heal");
     } else {
-      console.log("last run looks healthy — no empty price/stock fields");
+      console.log("last run looks healthy - no empty price/stock fields");
     }
     return { healed: [], skipped: [] };
   }
@@ -62,7 +62,7 @@ export async function healLastRun() {
     const timestamp = new Date().toISOString();
 
     if (!isStoreReady(store)) {
-      const outcome = "skipped — collector_id or URL not set";
+      const outcome = "skipped - collector_id or URL not set";
       appendHealLog({
         timestamp,
         collectorId: store.collectorId,

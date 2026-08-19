@@ -79,7 +79,7 @@ export async function runStoreScraper(store) {
     return {
       store: store.id,
       skipped: true,
-      reason: "collector_id or target URL not set — waiting for confirmation",
+      reason: "collector_id or target URL not set - waiting for confirmation",
       products: [],
     };
   }

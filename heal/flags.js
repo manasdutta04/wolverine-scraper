@@ -53,7 +53,7 @@ export function evaluateStore(storeId, rows) {
     const clone = dominantClone(rows);
     if (clone.pct > CLONE_RATIO) {
       reasons.push(
-        `${storeId}: ${(clone.pct * 100).toFixed(1)}% of rows share price=${clone.price} stock=${clone.stock} (${clone.count}/${n}) — extraction looks locked onto one element`,
+        `${storeId}: ${(clone.pct * 100).toFixed(1)}% of rows share price=${clone.price} stock=${clone.stock} (${clone.count}/${n}) - extraction looks locked onto one element`,
       );
     }
   }

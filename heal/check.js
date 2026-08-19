@@ -55,7 +55,7 @@ async function healStoreSimulated(store, evaluation) {
       whatBroke,
       healPrompt: prompt,
       outcome:
-        "simulated fixture, heal call skipped — collector_id or URL not set",
+        "simulated fixture, heal call skipped - collector_id or URL not set",
     });
     return { ok: false };
   }
@@ -130,7 +130,7 @@ async function healStore(store, evaluation) {
       store: store.id,
       whatBroke,
       healPrompt: prompt,
-      outcome: "skipped — collector_id or URL not set",
+      outcome: "skipped - collector_id or URL not set",
     });
     return { ok: false, skipped: true };
   }
@@ -213,13 +213,13 @@ async function runSimulatedFailure(storeId, { fix }) {
 
   if (evaluation.ok) {
     console.error(
-      "SIMULATED TEST FAILED: fixture did not trip red-flag detection — debug heal/flags.js",
+      "SIMULATED TEST FAILED: fixture did not trip red-flag detection - debug heal/flags.js",
     );
     process.exitCode = 1;
     return { ok: false, detection: false };
   }
 
-  console.log(`${store.name}: FAIL — ${evaluation.reasons.join("; ")}`);
+  console.log(`${store.name}: FAIL - ${evaluation.reasons.join("; ")}`);
 
   if (!fix) {
     console.error("detection fired; pass --fix to attempt a (rejected) live heal call");
@@ -259,7 +259,7 @@ export async function runCheck({ fix = false, simulateFailure = null } = {}) {
     if (evaluation.ok) {
       console.log(`${store.name}: ok (${evaluation.n} rows)`);
     } else {
-      console.log(`${store.name}: FAIL — ${evaluation.reasons.join("; ")}`);
+      console.log(`${store.name}: FAIL - ${evaluation.reasons.join("; ")}`);
     }
   }
 
@@ -269,7 +269,7 @@ export async function runCheck({ fix = false, simulateFailure = null } = {}) {
   }
 
   if (!fix) {
-    console.error(`${failing.length} store(s) failed checks — re-run with --fix to heal`);
+    console.error(`${failing.length} store(s) failed checks - re-run with --fix to heal`);
     process.exitCode = 1;
     return { ok: false, results };
   }
@@ -282,7 +282,7 @@ export async function runCheck({ fix = false, simulateFailure = null } = {}) {
 
   if (stillFailing.length > 0) {
     console.error(
-      `heal loop could not recover: ${stillFailing.join(", ")} — failing the job`,
+      `heal loop could not recover: ${stillFailing.join(", ")} - failing the job`,
     );
     process.exitCode = 1;
     return { ok: false, stillFailing };

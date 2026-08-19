@@ -1,0 +1,17 @@
+.git
+.github
+.next
+web/.next
+node_modules
+web/node_modules
+*.db
+*.sqlite
+.env
+.env.*
+**/.DS_Store
+scrapers
+pipeline
+heal
+db
+*.md
+!heal-log.md

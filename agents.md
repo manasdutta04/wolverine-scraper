@@ -6,7 +6,7 @@ built on Bright Data Scraper Studio. Built for the Scrape-Verse Hackathon
 (Aug 17-23, 2026), targeting the Web-Slinger grand prize: Best Use of
 Bright Data.
 
-Tagline: "It doesn't matter how badly the page gets cut up — it heals."
+Tagline: "It doesn't matter how badly the page gets cut up - it heals."
 
 Grand prize judging looks at: the scraper built in Scraper Studio, how
 it's driven from a coding agent, how it handles site changes (self-heal),
@@ -23,17 +23,17 @@ history, not just a staged demo).
 - Next.js (or plain HTML/JS) for the dashboard: current prices/stock +
   history chart per product, per store
 
-## Target stores (niche electronics/hobby — long tail, not in Bright
+## Target stores (niche electronics/hobby - long tail, not in Bright
 Data's 800+ prebuilt library)
-- Adafruit — adafruit.com — product listing/detail pages
-- SparkFun — sparkfun.com — product listing/detail pages
-- Pimoroni — shop.pimoroni.com — product listing/detail pages
-- The Pi Hut — thepihut.com — product listing/detail pages
+- Adafruit - adafruit.com - product listing/detail pages
+- SparkFun - sparkfun.com - product listing/detail pages
+- Pimoroni - shop.pimoroni.com - product listing/detail pages
+- The Pi Hut - thepihut.com - product listing/detail pages
 
 Fields to extract per product: name, price, stock status (in stock /
 out of stock / backorder), product URL.
 
-## Collector IDs (pin as soon as created — do not regenerate)
+## Collector IDs (pin as soon as created - do not regenerate)
 - adafruit: c_msyvm0ar1gznj2dlrq
 - sparkfun: c_msywbl7b18fsthmxn
 - pimoroni: c_msywj65f19rulm4cua
@@ -41,14 +41,14 @@ out of stock / backorder), product URL.
 
 ## Rules for the agent
 1. Confirm target URLs (specific category/product-listing pages) with
-   the human before creating scrapers — don't guess a URL that returns
+   the human before creating scrapers - don't guess a URL that returns
    nothing useful.
-2. Always use `bdata scraper create <url> "<field description>"` — never
+2. Always use `bdata scraper create <url> "<field description>"` - never
    hand-write CSS selectors or scraping logic from scratch.
 3. Immediately record each collector's `c_*` ID in this file. Reuse it;
    never recreate a scraper for a store that already has one.
 4. Every `bdata scraper run` output must be parsed and written to the
-   SQLite DB (table: snapshots — store, product_name, price, stock,
+   SQLite DB (table: snapshots - store, product_name, price, stock,
    url, scraped_at), not just printed.
 5. Self-heal loop (this is the core hackathon deliverable):
    - After each run, check for null/empty price or stock fields.
@@ -57,7 +57,7 @@ out of stock / backorder), product URL.
      then re-run the scraper to confirm the fix.
    - Log every heal event to `heal-log.md` with timestamp, collector,
      what broke, and the outcome. This log is part of our judging
-     evidence — keep it detailed and honest, including failed heal
+     evidence - keep it detailed and honest, including failed heal
      attempts if any occur.
 6. Never commit `.env`, tokens, or credentials. Use GitHub Actions
    secrets for CI. Mask tokens in any terminal output that gets

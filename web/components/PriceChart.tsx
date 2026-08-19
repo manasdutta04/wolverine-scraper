@@ -54,12 +54,12 @@ export function PriceChart({
       </div>
       {oneSnapshot ? (
         <p className="chart-note">
-          One snapshot so far — the line fills in after the next scrape batch.
+          One snapshot so far. The line fills in after the next scrape batch.
           This dot is the live price, not a fabricated series.
         </p>
       ) : null}
       <svg className="chart-svg" viewBox={`0 0 ${width} ${height}`} role="img">
-        <title>{title} price history</title>
+        <title>{`${title} price history`}</title>
         {[0, 0.5, 1].map((t) => {
           const y = pad.top + innerH * (1 - t);
           const value = min + span * t;

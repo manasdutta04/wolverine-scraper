@@ -4,7 +4,7 @@ Self-healing price and stock tracker for niche electronics / hobby stores.
 Bright Data Scraper Studio collectors feed SQLite; a Next.js dashboard reads
 the latest batch.
 
-> It doesn't matter how badly the page gets cut up — it heals.
+> It doesn't matter how badly the page gets cut up. It heals.
 
 ## Layout
 
@@ -93,3 +93,27 @@ The job uploads `db/wolverine.db` + `heal-log.md` as an artifact and commits
 `heal-log.md`. Filter by store, search products, pin a row for the price chart.
 Until a second scrape batch exists, the chart states that there is one snapshot
 so far.
+
+## Docker
+
+Build and run the dashboard (needs a local `db/wolverine.db` from a scrape):
+
+```bash
+docker compose up --build
+```
+
+Then open http://localhost:3000. The container mounts `db/wolverine.db` and
+`heal-log.md` read-only. If the database file is missing, create it first with
+`npm run scrape` (or copy a snapshot from a CI artifact).
+
+```bash
+docker build -t wolverine-dashboard .
+docker run --rm -p 3000:3000 \
+  -e WOLVERINE_DB=/data/wolverine.db \
+  -e WOLVERINE_HEAL_LOG=/data/heal-log.md \
+  -v "%cd%/db/wolverine.db:/data/wolverine.db:ro" \
+  -v "%cd%/heal-log.md:/data/heal-log.md:ro" \
+  wolverine-dashboard
+```
+
+On macOS/Linux, use `$(pwd)` instead of `%cd%`.

@@ -7,7 +7,7 @@ export const healLogPath = path.join(rootDir, "heal-log.md");
 
 export function appendHealLog(entry) {
   const heading = entry.simulated
-    ? `## ${entry.timestamp} — SIMULATED TEST RUN (not a real site failure)`
+    ? `## ${entry.timestamp} - SIMULATED TEST RUN (not a real site failure)`
     : `## ${entry.timestamp}`;
   const lines = [
     "",
@@ -17,7 +17,7 @@ export function appendHealLog(entry) {
   ];
   if (entry.simulated) {
     lines.push(
-      "- **label: SIMULATED TEST RUN** — fixture data only; not a live site failure",
+      "- **label: SIMULATED TEST RUN** - fixture data only; not a live site failure",
     );
   }
   if (entry.healPrompt) {

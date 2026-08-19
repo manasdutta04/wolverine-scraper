@@ -2,11 +2,11 @@
 
 Every entry is a real Scraper Studio heal. Failed attempts stay in this file.
 
-## 2026-08-19T00:56:00Z — SparkFun attempt 1 (partial)
+## 2026-08-19T00:56:00Z - SparkFun attempt 1 (partial)
 
 - collector: `c_msywbl7b18fsthmxn` (sparkfun)
 - what broke: every product returned the same price (`$739.95`) and the same stock status (`Backorder`) instead of per-card values
-- heal prompt: `every product is returning the same price ($739.95) and same stock status (Backorder) instead of each product's actual price and stock — the extraction appears to be locked onto one element instead of iterating per product card`
+- heal prompt: `every product is returning the same price ($739.95) and same stock status (Backorder) instead of each product's actual price and stock - the extraction appears to be locked onto one element instead of iterating per product card`
 - CLI: heal → awaiting_approval → approve → re-run (CLI requires approve before a live run can use the new template)
 - before sample:
   ```json
@@ -38,7 +38,7 @@ Every entry is a real Scraper Studio heal. Failed attempts stay in this file.
   ```
 - outcome: **not fixed on the listing page.** Preview extracted one product at `$50` / In stock; the full listing run was still 120/120 at `$739.95` / Backorder. Follow-up heal targets per-card iteration on the category listing.
 
-## 2026-08-19T01:09:44Z — SparkFun attempt 2 (verified)
+## 2026-08-19T01:09:44Z - SparkFun attempt 2 (verified)
 
 - collector: `c_msywbl7b18fsthmxn` (sparkfun)
 - what broke: listing run still cloned one price/stock onto every card after attempt 1
@@ -64,7 +64,7 @@ Every entry is a real Scraper Studio heal. Failed attempts stay in this file.
   ```
 - confirmation: 120 products, 84 distinct prices, stock mix `{In stock: 58, Out of stock: 41, Discontinued: 13, Backorder: 8}`. Neighbor rows now differ (`$50` / In stock vs `$114.95` / Discontinued vs `$99.95` / Discontinued vs `$149.95` / Out of stock).
 
-## 2026-08-19T01:14:00Z — Pimoroni attempt 1 (currency fixed; names still broken)
+## 2026-08-19T01:14:00Z - Pimoroni attempt 1 (currency fixed; names still broken)
 
 - collector: `c_msywj65f19rulm4cua` (pimoroni)
 - what broke: currency returned as repeated `£` characters (`££££`); some product names grabbed variant option text instead of the base product name
@@ -90,9 +90,9 @@ Every entry is a real Scraper Studio heal. Failed attempts stay in this file.
     "product_url": "https://shop.pimoroni.com/products/raspberry-pi-12-5w-micro-usb-power-supply"
   }
   ```
-- confirmation: **currency fixed** — 320/320 rows have a single `£`, 0 repeated-pound rows. **Names not fixed** — still variant labels (`United Kingdom`, `4.0"`, `No Disk`, `Red/White`). Follow-up heal targets the title on the card.
+- confirmation: **currency fixed** - 320/320 rows have a single `£`, 0 repeated-pound rows. **Names not fixed** - still variant labels (`United Kingdom`, `4.0"`, `No Disk`, `Red/White`). Follow-up heal targets the title on the card.
 
-## 2026-08-19T01:30:28Z — Pimoroni attempt 2 (verified)
+## 2026-08-19T01:30:28Z - Pimoroni attempt 2 (verified)
 
 - collector: `c_msywj65f19rulm4cua` (pimoroni)
 - what broke: names still used variant labels after attempt 1; currency was already a single `£`
@@ -120,7 +120,7 @@ Every entry is a real Scraper Studio heal. Failed attempts stay in this file.
   ```
 - confirmation: 320 products, currency still single `£` on all rows. Names now look like product titles (`Raspberry Pi 5 Official Case with Fan`, `HyperPixel 4.0 Square…`) instead of plug-region / size variants.
 
-## 2026-08-19T01:42:00Z — The Pi Hut (verified)
+## 2026-08-19T01:42:00Z - The Pi Hut (verified)
 
 - collector: `c_msyx5sb61lfwvvvspd` (thepihut)
 - what broke: currency symbol returned as repeated `£` characters (`££££££££`) instead of a single `£` plus numeric price
@@ -148,7 +148,7 @@ Every entry is a real Scraper Studio heal. Failed attempts stay in this file.
   ```
 - confirmation: 48/48 rows have a single `£`, 0 repeated-pound rows, 29 distinct prices.
 
-## 2026-08-19T01:46:00Z — Adafruit (verified)
+## 2026-08-19T01:46:00Z - Adafruit (verified)
 
 - collector: `c_msyvm0ar1gznj2dlrq` (adafruit)
 - what broke: 53 of 836 products missing price; stock status was noisy variant/description text instead of a clean enum
@@ -176,9 +176,9 @@ Every entry is a real Scraper Studio heal. Failed attempts stay in this file.
 - confirmation: 662 products (listing coverage dropped vs 836). **0/662 missing price.** Stock is a clean enum on every row: `{in stock: 276, out of stock: 74, unknown: 312}`. No leftover variant-blob stock strings.
 
 
-## 2026-08-19T16:03:58.790Z — SIMULATED TEST RUN (not a real site failure)
+## 2026-08-19T16:03:58.790Z - SIMULATED TEST RUN (not a real site failure)
 - collector: `c_msywbl7b18fsthmxn` (sparkfun)
-- what broke: SIMULATED fixture (cloned $739.95 / backorder). Detection: sparkfun: 100.0% of rows share price=739.95 stock=backorder (20/20) — extraction looks locked onto one element
-- **label: SIMULATED TEST RUN** — fixture data only; not a live site failure
-- heal prompt: `SparkFun listing scrape looks broken: sparkfun: 100.0% of rows share price=739.95 stock=backorder (20/20) — extraction looks locked onto one element. Re-extract each product card's own name, numeric price, currency, stock status, and URL. Do not reuse one price/stock node for every row.`
+- what broke: SIMULATED fixture (cloned $739.95 / backorder). Detection: sparkfun: 100.0% of rows share price=739.95 stock=backorder (20/20) - extraction looks locked onto one element
+- **label: SIMULATED TEST RUN** - fixture data only; not a live site failure
+- heal prompt: `SparkFun listing scrape looks broken: sparkfun: 100.0% of rows share price=739.95 stock=backorder (20/20) - extraction looks locked onto one element. Re-extract each product card's own name, numeric price, currency, stock status, and URL. Do not reuse one price/stock node for every row.`
 - outcome: simulated fixture, heal call attempted, studio confirmed no live extraction issue (preview still had distinct per-card prices); rejected the proposal so the live collector is unchanged

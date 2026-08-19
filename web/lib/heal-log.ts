@@ -18,9 +18,10 @@ export function loadHealEvents(): HealEvent[] {
   for (const part of parts) {
     const [headingLine, ...rest] = part.split(/\r?\n/);
     const heading = headingLine?.trim() ?? "";
-    const dash = heading.indexOf(" — ");
+    const sep = " - ";
+    const dash = heading.indexOf(sep);
     const at = dash >= 0 ? heading.slice(0, dash).trim() : "";
-    const title = dash >= 0 ? heading.slice(dash + 3).trim() : heading;
+    const title = dash >= 0 ? heading.slice(dash + sep.length).trim() : heading;
     const body = rest.join("\n");
 
     const collectorLine = field(body, "collector");

@@ -1,0 +1,12 @@
+services:
+  web:
+    build: .
+    image: wolverine-dashboard
+    ports:
+      - "3000:3000"
+    environment:
+      WOLVERINE_DB: /data/wolverine.db
+      WOLVERINE_HEAL_LOG: /data/heal-log.md
+    volumes:
+      - ./db/wolverine.db:/data/wolverine.db:ro
+      - ./heal-log.md:/data/heal-log.md:ro
