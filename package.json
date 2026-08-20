@@ -1,6 +1,6 @@
 {
   "name": "wolverine-scraper",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
   "description": "Self-healing price and stock tracker for niche electronics stores.",
   "type": "module",
