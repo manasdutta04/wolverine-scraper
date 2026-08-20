@@ -1,0 +1,100 @@
+name: release
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      bump:
+        description: Semver bump for a manual release
+        type: choice
+        options:
+          - patch
+          - minor
+          - major
+        default: patch
+
+permissions:
+  contents: write
+
+concurrency:
+  group: release-main
+  cancel-in-progress: false
+
+jobs:
+  release:
+    # Skip bot heal-log commits and the version-bump commit itself (avoids loops / noise).
+    if: >
+      github.event_name == 'workflow_dispatch' || (
+        github.actor != 'github-actions[bot]' &&
+        github.event.head_commit != null &&
+        !contains(github.event.head_commit.message, '[skip release]') &&
+        !startsWith(github.event.head_commit.message, 'ci:') &&
+        !startsWith(github.event.head_commit.message, 'chore(release):')
+      )
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Configure git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      - name: Decide bump
+        id: bump
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            BUMP="${{ inputs.bump }}"
+          else
+            MSG="$(git log -1 --pretty=%B)"
+            if echo "$MSG" | grep -qiE '(#major|BREAKING CHANGE)'; then
+              BUMP=major
+            elif echo "$MSG" | grep -qiE '(#minor|^feat(\(.+\))?:)'; then
+              BUMP=minor
+            else
+              BUMP=patch
+            fi
+          fi
+          echo "bump=$BUMP" >> "$GITHUB_OUTPUT"
+          echo "Using bump: $BUMP"
+
+      - name: Bump version, tag, and push
+        id: version
+        run: |
+          NEW_VERSION="$(npm version "${{ steps.bump.outputs.bump }}" -m "chore(release): %s [skip release]")"
+          # npm version prints e.g. v0.1.1
+          TAG="$NEW_VERSION"
+          VERSION="${TAG#v}"
+          echo "tag=$TAG" >> "$GITHUB_OUTPUT"
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+          git push origin HEAD:main --follow-tags
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.version.outputs.tag }}
+          name: Wolverine ${{ steps.version.outputs.tag }}
+          generate_release_notes: true
+          body: |
+            Automated release from `main`.
+
+            **Version:** `${{ steps.version.outputs.version }}`
+
+            ### Run the dashboard
+            ```bash
+            docker pull manasdutta04/wolverine-dashboard:latest
+            docker run --rm -p 3000:3000 manasdutta04/wolverine-dashboard:latest
+            ```
+
+            ### Clone and scrape
+            See the README for Bright Data Scraper Studio setup, pinned collectors, and heal loop.
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

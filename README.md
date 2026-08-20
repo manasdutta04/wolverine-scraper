@@ -152,3 +152,14 @@ docker run --rm -p 3000:3000 \
 
 On macOS/Linux, use `$(pwd)` instead of `%cd%`.
 
+## Releases
+
+Every push to `main` that is not a bot/`ci:`/release commit bumps
+`package.json` (patch by default) and publishes a GitHub Release with notes.
+
+- Commit message contains `#minor` or starts with `feat:` → minor bump
+- Commit message contains `#major` or `BREAKING CHANGE` → major bump
+- Manual: Actions → **release** → Run workflow → pick patch/minor/major
+
+Skip a bump with `[skip release]` in the commit message.
+
