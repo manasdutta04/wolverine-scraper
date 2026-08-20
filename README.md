@@ -6,6 +6,34 @@ the latest batch.
 
 > It doesn't matter how badly the page gets cut up. It heals.
 
+## How Bright Data Scraper Studio is used
+
+This project is built around Scraper Studio collectors, not Bright Data's
+pre-built scraper library. The coding agent drives the Bright Data CLI end to
+end:
+
+1. `bdata scraper create <listing-url> "<fields>"` builds a custom scraper per
+   store and returns a `c_*` Collector ID (pinned in `scrapers/config.js` and
+   `AGENTS.md`; never recreate).
+2. `bdata scraper run <collector_id> <url>` returns structured JSON. The
+   pipeline (`npm run scrape`) parses it and inserts timestamped rows into
+   `db/wolverine.db`.
+3. When extraction goes empty or clones one price/stock onto every card,
+   `npm run heal` calls `bdata scraper heal`, then `approve`, then re-runs that
+   same Collector ID so downstream schema and the dashboard stay stable.
+4. GitHub Actions cron runs the same scrape + heal loop; optional
+   `simulate_failure` proves detection without breaking a live collector.
+
+Example structured output (trimmed from a real run):
+[`examples/sample-output.json`](examples/sample-output.json). Heal history:
+[`heal-log.md`](heal-log.md).
+
+## AI assistance
+
+Cursor (AI coding assistant) was used to help write pipeline, heal, CI, and
+dashboard code. Architecture, target stores, Collector IDs, heal prompts, and
+verification were directed and checked by the author.
+
 ## Layout
 
 | Path | Role |
@@ -117,3 +145,17 @@ docker run --rm -p 3000:3000 \
 ```
 
 On macOS/Linux, use `$(pwd)` instead of `%cd%`.
+
+Published image (when pushed):
+
+```bash
+docker pull <dockerhub-user>/wolverine-dashboard:latest
+docker run --rm -p 3000:3000 \
+  -e WOLVERINE_DB=/data/wolverine.db \
+  -e WOLVERINE_HEAL_LOG=/data/heal-log.md \
+  -v "$(pwd)/db/wolverine.db:/data/wolverine.db:ro" \
+  -v "$(pwd)/heal-log.md:/data/heal-log.md:ro" \
+  <dockerhub-user>/wolverine-dashboard:latest
+```
+
+Replace `<dockerhub-user>` after the first Hub push.

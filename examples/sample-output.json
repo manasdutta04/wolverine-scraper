@@ -1,0 +1,104 @@
+{
+  "note": "Example structured output from a real pipeline run (trimmed). Full DB is gitignored.",
+  "scraped_at": "2026-08-19T06:00:21.700Z",
+  "counts": [
+    {
+      "store": "adafruit",
+      "n": 662
+    },
+    {
+      "store": "pimoroni",
+      "n": 320
+    },
+    {
+      "store": "sparkfun",
+      "n": 120
+    },
+    {
+      "store": "thepihut",
+      "n": 48
+    }
+  ],
+  "samples": {
+    "adafruit": [
+      {
+        "store": "adafruit",
+        "product_name": "Pi Model A+ Case Base - Pink",
+        "price": 2,
+        "currency": "USD",
+        "stock_status": "in stock",
+        "product_url": "https://www.adafruit.com/product/2373",
+        "scraped_at": "2026-08-19T06:00:21.700Z"
+      },
+      {
+        "store": "adafruit",
+        "product_name": "Pimoroni Fan SHIM for Raspberry Pi",
+        "price": 11.95,
+        "currency": "USD",
+        "stock_status": "unknown",
+        "product_url": "https://www.adafruit.com/product/4316",
+        "scraped_at": "2026-08-19T06:00:21.700Z"
+      }
+    ],
+    "sparkfun": [
+      {
+        "store": "sparkfun",
+        "product_name": "Raspberry Pi 5 - 1GB",
+        "price": 50,
+        "currency": "USD",
+        "stock_status": "In stock",
+        "product_url": "https://www.sparkfun.com/raspberry-pi-5-1gb.html",
+        "scraped_at": "2026-08-19T06:00:21.700Z"
+      },
+      {
+        "store": "sparkfun",
+        "product_name": "Raspberry Pi 5 Basic Kit - 4GB",
+        "price": 114.95,
+        "currency": "USD",
+        "stock_status": "Discontinued",
+        "product_url": "https://www.sparkfun.com/raspberry-pi-5-basic-kit-4gb.html",
+        "scraped_at": "2026-08-19T06:00:21.700Z"
+      }
+    ],
+    "pimoroni": [
+      {
+        "store": "pimoroni",
+        "product_name": "Raspberry Pi 5",
+        "price": 36,
+        "currency": "GBP",
+        "stock_status": "ships today",
+        "product_url": "https://shop.pimoroni.com/products/raspberry-pi-5?variant=55956625195387",
+        "scraped_at": "2026-08-19T06:00:21.700Z"
+      },
+      {
+        "store": "pimoroni",
+        "product_name": "Pirate Audio: Line-out for Raspberry Pi",
+        "price": 18,
+        "currency": "GBP",
+        "stock_status": "ships today",
+        "product_url": "https://shop.pimoroni.com/products/pirate-audio-line-out",
+        "scraped_at": "2026-08-19T06:00:21.700Z"
+      }
+    ],
+    "thepihut": [
+      {
+        "store": "thepihut",
+        "product_name": "Raspberry Pi Pico W",
+        "price": 5.8,
+        "currency": "GBP",
+        "stock_status": "In stock",
+        "product_url": "https://thepihut.com/products/raspberry-pi-pico-w",
+        "scraped_at": "2026-08-19T06:00:21.700Z"
+      },
+      {
+        "store": "thepihut",
+        "product_name": "Raspberry Pi 3 Case - Black/Grey",
+        "price": 4.8,
+        "currency": "GBP",
+        "stock_status": "In stock",
+        "product_url": "https://thepihut.com/products/official-raspberry-pi-3-case-black-grey",
+        "scraped_at": "2026-08-19T06:00:21.700Z"
+      }
+    ]
+  }
+}
