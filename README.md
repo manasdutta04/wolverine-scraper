@@ -124,38 +124,31 @@ so far.
 
 ## Docker
 
-Build and run the dashboard (needs a local `db/wolverine.db` from a scrape):
+The published image includes a sample SQLite snapshot and `heal-log.md`, so
+judges (or anyone) can run the dashboard with no local scrape:
+
+```bash
+docker pull manasdutta04/wolverine-dashboard:latest
+docker run --rm -p 3000:3000 manasdutta04/wolverine-dashboard:latest
+```
+
+Open http://localhost:3000.
+
+Build locally:
 
 ```bash
 docker compose up --build
 ```
 
-Then open http://localhost:3000. The container mounts `db/wolverine.db` and
-`heal-log.md` read-only. If the database file is missing, create it first with
-`npm run scrape` (or copy a snapshot from a CI artifact).
+To show your own scrape instead of the bundled snapshot, mount files over
+`/data`:
 
 ```bash
-docker build -t wolverine-dashboard .
 docker run --rm -p 3000:3000 \
-  -e WOLVERINE_DB=/data/wolverine.db \
-  -e WOLVERINE_HEAL_LOG=/data/heal-log.md \
   -v "%cd%/db/wolverine.db:/data/wolverine.db:ro" \
   -v "%cd%/heal-log.md:/data/heal-log.md:ro" \
-  wolverine-dashboard
+  manasdutta04/wolverine-dashboard:latest
 ```
 
 On macOS/Linux, use `$(pwd)` instead of `%cd%`.
 
-Published image (when pushed):
-
-```bash
-docker pull <dockerhub-user>/wolverine-dashboard:latest
-docker run --rm -p 3000:3000 \
-  -e WOLVERINE_DB=/data/wolverine.db \
-  -e WOLVERINE_HEAL_LOG=/data/heal-log.md \
-  -v "$(pwd)/db/wolverine.db:/data/wolverine.db:ro" \
-  -v "$(pwd)/heal-log.md:/data/heal-log.md:ro" \
-  <dockerhub-user>/wolverine-dashboard:latest
-```
-
-Replace `<dockerhub-user>` after the first Hub push.

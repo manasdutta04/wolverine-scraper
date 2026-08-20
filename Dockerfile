@@ -15,7 +15,9 @@ RUN npm run build
 FROM node:20-bookworm-slim
 WORKDIR /app
 COPY --from=build /app/web /app/web
-COPY heal-log.md /app/heal-log.md
+# Bundled snapshot so `docker pull` + `docker run` works with no local mounts.
+COPY heal-log.md /data/heal-log.md
+COPY db/wolverine.db /data/wolverine.db
 ENV NODE_ENV=production
 ENV NEXT_TELEMETRY_DISABLED=1
 ENV WOLVERINE_DB=/data/wolverine.db
