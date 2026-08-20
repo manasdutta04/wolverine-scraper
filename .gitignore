@@ -12,6 +12,5 @@ node_modules
 *.db-shm
 .DS_Store
 Thumbs.db
-web/.next
-web/out
+web/
 *.log

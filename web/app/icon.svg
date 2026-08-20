@@ -1,8 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img">
-  <title>Wolverine</title>
-  <rect width="32" height="32" fill="#0b0a08"/>
-  <path fill="#c13a22" d="M3 9 L14 22 L11 24 L2 12 Z"/>
-  <path fill="#c9843a" d="M8 6 L20 21 L17 24 L6 10 Z"/>
-  <path fill="#efb056" d="M14 5 L26 20 L23 24 L12 10 Z"/>
-  <path fill="none" stroke="#ead9c2" stroke-width="1.2" d="M4 26 H28"/>
-</svg>

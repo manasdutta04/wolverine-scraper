@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Scar Feed</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+    <link href="https://db.onlinewebfonts.com/c/8cb707a9b8a73f8a7403336b861c3074?family=BubbledotICG-FinePos" rel="stylesheet" />
+    <link rel="stylesheet" href="./app.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="app-header">
+        <a class="logo" href="./index.html" aria-label="Home">
+          <img src="./assets/logo.webp" alt="" width="52" height="52" />
+        </a>
+        <nav class="nav-pill desktop-nav" aria-label="Primary">
+          <a class="nav-link" href="./index.html">Home</a>
+          <a class="nav-link active" href="./product.html">Product</a>
+          <a class="nav-link" href="./case-studies.html">Case Studies</a>
+          <a class="nav-link" href="./contact.html">Contact</a>
+        </nav>
+        <a class="sign-in desktop-signin" href="./contact.html">Sign in</a>
+        <button class="burger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
+          <span></span><span></span><span></span>
+        </button>
+      </header>
+
+      <main>
+        <section class="page-hero">
+          <p class="eyebrow">Product / Feed</p>
+          <h1 class="page-title">Scar Feed</h1>
+          <p class="page-lede">Plain-English signals from scrape batches and cross-store matches.</p>
+          <div class="subnav">
+            <a class="chip on" href="./feed.html">Feed</a>
+            <a class="chip" href="./court.html">Court</a>
+            <a class="chip" href="./catalog.html">Catalog</a>
+          </div>
+        </section>
+
+        <div class="toolbar">
+          <select id="store" aria-label="Filter by store">
+            <option value="all">All stores</option>
+          </select>
+          <button class="chip on" type="button" id="trusted">Trusted only</button>
+          <button class="chip" type="button" id="suppressed">Show suppressed</button>
+        </div>
+        <p class="meta-line" id="count"></p>
+        <ul class="feed-list" id="feed"></ul>
+        <button class="more" type="button" id="more" hidden>More signals</button>
+      </main>
+    </div>
+
+    <div class="overlay" hidden></div>
+    <div class="mobile-menu" id="mobile-menu" hidden>
+      <a class="nav-link" href="./index.html">Home</a>
+      <a class="nav-link active" href="./product.html">Product</a>
+      <a class="nav-link" href="./case-studies.html">Case Studies</a>
+      <a class="nav-link" href="./contact.html">Contact</a>
+      <a class="sign-in mobile-signin" href="./contact.html">Sign in</a>
+    </div>
+
+    <script type="module" src="./js/feed.js"></script>
+  </body>
+</html>

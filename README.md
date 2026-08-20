@@ -22,8 +22,19 @@ docker run --rm -p 3000:3000 manasdutta04/wolverine-dashboard:latest
 
 Open http://localhost:3000
 
-3. **Vercel (optional):** see [docs/DEPLOY.md](docs/DEPLOY.md) (`npx vercel login`, Root Directory `web`).
-4. **Demo video:** _add YouTube / Loom link here_
+3. **Demo video:** _add YouTube / Loom link here_
+
+## Site map
+
+| Page | What you see |
+| --- | --- |
+| `/` | Landing (video hero) |
+| `/product.html` | Scar Feed overview |
+| `/feed.html` | Signal feed |
+| `/court.html` | Heal Court verdicts |
+| `/catalog.html` | Product catalog |
+| `/case-studies.html` | Heal journal |
+| `/contact.html` | Links (public demo, no auth) |
 
 ## Screenshots
 
@@ -37,7 +48,7 @@ Open http://localhost:3000
 2. `bdata scraper run` returns structured JSON; `npm run scrape` writes `db/wolverine.db`.
 3. Red flags (empty prices, cloned price/stock) go to **Heal Court**. Repair runs `bdata scraper heal` then `approve`. Refuse rejects the proposal when the heal preview is still cloned.
 4. GitHub Actions cron scrapes + heals. Optional `simulate_failure` proves detection without changing a live collector.
-5. `npm run scar:export` writes `web/data/scar.json` for the public read-only demo (no Bright Data key on the site).
+5. `npm run scar:export` writes `site/data/scar.json` for the public read-only demo (no Bright Data key on the site).
 
 Example output: [`examples/sample-output.json`](examples/sample-output.json) · Heal journal: [`heal-log.md`](heal-log.md)
 
@@ -48,7 +59,7 @@ flowchart TB
   pipe --> court{Heal Court}
   court -->|repair| heal[bdata heal approve]
   court -->|refuse| quiet[Suppress signals]
-  feed --> ui[Public dashboard]
+  feed --> ui[Public multi-page site]
   court --> ui
 ```
 
@@ -67,7 +78,6 @@ flowchart TB
 git clone https://github.com/manasdutta04/wolverine-scraper.git
 cd wolverine-scraper
 npm install
-cd web && npm install && cd ..
 
 # optional live scrape
 export BRIGHTDATA_API_KEY=...   # never commit
@@ -76,7 +86,7 @@ npm run scrape
 npm run check
 npm run heal                    # Heal Court on failures
 
-npm run scar:export             # writes web/data/scar.json
+npm run scar:export             # writes site/data/scar.json
 npm run web:dev                 # http://localhost:3000
 npm test
 ```
@@ -89,7 +99,7 @@ npm test
 | `scrapers/` | Store registry + `bdata` runner |
 | `pipeline/` | Scrape all stores → SQLite |
 | `heal/` | Red-flag check + Court-aware heal loop |
-| `web/` | Next.js Scar Feed UI (static export for Pages/Docker) |
+| `site/` | Static multi-page UI (landing + interiors) |
 | `docs/` | Architecture graph, screenshots, deploy notes |
 | `.github/workflows/` | Cron scrape/heal, Pages deploy, auto Releases |
 | `SECURITY.md` | Secrets and reporting |

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Catalog · Scar Feed</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+    <link href="https://db.onlinewebfonts.com/c/8cb707a9b8a73f8a7403336b861c3074?family=BubbledotICG-FinePos" rel="stylesheet" />
+    <link rel="stylesheet" href="./app.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="app-header">
+        <a class="logo" href="./index.html" aria-label="Home">
+          <img src="./assets/logo.webp" alt="" width="52" height="52" />
+        </a>
+        <nav class="nav-pill desktop-nav" aria-label="Primary">
+          <a class="nav-link" href="./index.html">Home</a>
+          <a class="nav-link active" href="./product.html">Product</a>
+          <a class="nav-link" href="./case-studies.html">Case Studies</a>
+          <a class="nav-link" href="./contact.html">Contact</a>
+        </nav>
+        <a class="sign-in desktop-signin" href="./contact.html">Sign in</a>
+        <button class="burger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
+          <span></span><span></span><span></span>
+        </button>
+      </header>
+
+      <main>
+        <section class="page-hero">
+          <p class="eyebrow">Product / Catalog</p>
+          <h1 class="page-title">Catalog</h1>
+          <p class="page-lede">Live rows from the latest scrape batch. Select a product for price context.</p>
+          <div class="subnav">
+            <a class="chip" href="./feed.html">Feed</a>
+            <a class="chip" href="./court.html">Court</a>
+            <a class="chip on" href="./catalog.html">Catalog</a>
+          </div>
+        </section>
+
+        <div class="toolbar">
+          <select id="store" aria-label="Filter by store">
+            <option value="all">All stores</option>
+          </select>
+          <input id="q" type="search" placeholder="Filter products" aria-label="Search products" />
+        </div>
+        <p class="meta-line" id="count"></p>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Product</th>
+                <th>Price</th>
+                <th>Stock</th>
+                <th>Store</th>
+              </tr>
+            </thead>
+            <tbody id="tbody"></tbody>
+          </table>
+        </div>
+        <button class="more" type="button" id="more" hidden>Show more</button>
+
+        <section class="chart-panel">
+          <div class="chart-head">
+            <span>Price</span>
+            <span id="chart-title">none selected</span>
+          </div>
+          <p class="chart-note" id="chart-note"></p>
+          <div id="chart"></div>
+        </section>
+      </main>
+    </div>
+
+    <div class="overlay" hidden></div>
+    <div class="mobile-menu" id="mobile-menu" hidden>
+      <a class="nav-link" href="./index.html">Home</a>
+      <a class="nav-link active" href="./product.html">Product</a>
+      <a class="nav-link" href="./case-studies.html">Case Studies</a>
+      <a class="nav-link" href="./contact.html">Contact</a>
+      <a class="sign-in mobile-signin" href="./contact.html">Sign in</a>
+    </div>
+
+    <script type="module" src="./js/catalog.js"></script>
+  </body>
+</html>

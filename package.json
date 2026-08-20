@@ -13,8 +13,8 @@
     "heal": "node heal/check.js --fix",
     "scar:export": "node scar/export.js",
     "test": "node --test scar/scar.test.js",
-    "web:dev": "npm run scar:export && npm run dev --prefix web",
-    "web:build": "npm run scar:export && npm run build --prefix web"
+    "web:dev": "npm run scar:export && npx --yes serve site -l tcp://127.0.0.1:3000",
+    "web:build": "npm run scar:export"
   },
   "dependencies": {
     "better-sqlite3": "^12.2.0"

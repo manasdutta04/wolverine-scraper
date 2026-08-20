@@ -80,9 +80,9 @@ if (isMain) {
   const db = openDb();
   try {
     const payload = buildScarPayload(db);
-    const outDir = path.join(root, "web", "data");
+    const outDir = path.join(root, "site", "data");
     fs.mkdirSync(outDir, { recursive: true });
-    // Slim export for Vercel (no full 1150 history dump in JSON if huge — keep current + feed).
+    // Slim export for the static demo (current rows + feed + court + heals).
     const slim = {
       generatedAt: payload.generatedAt,
       tagline: payload.tagline,

@@ -1,9 +1,9 @@
 .git
 .github
 .next
-web/.next
 node_modules
-web/node_modules
+web
+web/
 .env
 .env.*
 **/.DS_Store

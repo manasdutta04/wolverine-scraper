@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Contact · Scar Feed</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+    <link href="https://db.onlinewebfonts.com/c/8cb707a9b8a73f8a7403336b861c3074?family=BubbledotICG-FinePos" rel="stylesheet" />
+    <link rel="stylesheet" href="./app.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="app-header">
+        <a class="logo" href="./index.html" aria-label="Home">
+          <img src="./assets/logo.webp" alt="" width="52" height="52" />
+        </a>
+        <nav class="nav-pill desktop-nav" aria-label="Primary">
+          <a class="nav-link" href="./index.html">Home</a>
+          <a class="nav-link" href="./product.html">Product</a>
+          <a class="nav-link" href="./case-studies.html">Case Studies</a>
+          <a class="nav-link active" href="./contact.html">Contact</a>
+        </nav>
+        <a class="sign-in desktop-signin" href="./contact.html">Sign in</a>
+        <button class="burger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
+          <span></span><span></span><span></span>
+        </button>
+      </header>
+
+      <main>
+        <section class="page-hero">
+          <p class="eyebrow">Public demo</p>
+          <h1 class="page-title">Contact</h1>
+          <p class="page-lede">
+            This demo is public — no account required. Sign in is a placeholder.
+            Use the links below for source, Docker, and the live site.
+          </p>
+        </section>
+
+        <ul class="contact-list">
+          <li>
+            <a href="https://github.com/manasdutta04/wolverine-scraper" target="_blank" rel="noreferrer">GitHub repository</a>
+            <p>Source, heal log, and CI history.</p>
+          </li>
+          <li>
+            <a href="https://hub.docker.com/r/manasdutta04/wolverine-dashboard" target="_blank" rel="noreferrer">Docker Hub image</a>
+            <p><code>docker pull manasdutta04/wolverine-dashboard:latest</code></p>
+          </li>
+          <li>
+            <a href="https://manasdutta04.github.io/wolverine-scraper/" target="_blank" rel="noreferrer">Live demo</a>
+            <p>Static multi-page site on GitHub Pages.</p>
+          </li>
+          <li>
+            <a href="./product.html">Open Scar Feed product</a>
+            <p>Feed, Heal Court, and catalog — no Bright Data key on the public site.</p>
+          </li>
+        </ul>
+      </main>
+    </div>
+
+    <div class="overlay" hidden></div>
+    <div class="mobile-menu" id="mobile-menu" hidden>
+      <a class="nav-link" href="./index.html">Home</a>
+      <a class="nav-link" href="./product.html">Product</a>
+      <a class="nav-link" href="./case-studies.html">Case Studies</a>
+      <a class="nav-link active" href="./contact.html">Contact</a>
+      <a class="sign-in mobile-signin" href="./contact.html">Sign in</a>
+    </div>
+
+    <script type="module">
+      import { initChrome } from "./js/shared.js";
+      initChrome();
+    </script>
+  </body>
+</html>

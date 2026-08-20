@@ -4,7 +4,7 @@ on:
   push:
     branches: [main]
     paths:
-      - "web/**"
+      - "site/**"
       - "scar/**"
       - "docs/**"
       - ".github/workflows/pages.yml"
@@ -24,22 +24,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: "20"
-          cache: npm
-          cache-dependency-path: web/package-lock.json
-      - name: Install and export
-        working-directory: web
-        env:
-          BASE_PATH: /wolverine-scraper
-          NEXT_TELEMETRY_DISABLED: "1"
+      - name: Ensure snapshot present
         run: |
-          npm ci
-          npm run build
+          test -f site/data/scar.json || (echo "missing site/data/scar.json" && exit 1)
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: web/out
+          path: site
 
   deploy:
     needs: build

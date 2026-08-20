@@ -22,6 +22,7 @@ history, not just a staged demo).
 - GitHub Actions (cron) for scheduled runs + autonomous self-heal loop
 - Next.js (or plain HTML/JS) for the dashboard: current prices/stock +
   history chart per product, per store
+  → **now:** static multi-page `site/` (landing + Feed / Court / Catalog)
 
 ## Target stores (niche electronics/hobby - long tail, not in Bright
 Data's 800+ prebuilt library)
@@ -89,5 +90,6 @@ out of stock / backorder), product URL.
 - [x] Dashboard: price history chart per product
 - [x] Scar Feed signals + Heal Court (release / repair / refuse)
 - [x] Public demo URL linked in README (GitHub Pages + Docker Hub)
+- [x] Multi-page static site (`site/` landing + interiors)
 - [ ] Demo video recorded and linked in README
 - [ ] LinkedIn post drafted for Daily Bugle track
