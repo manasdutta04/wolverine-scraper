@@ -45,6 +45,7 @@ verification were directed and checked by the author.
 | `web/` | Next.js dashboard (current table + history chart + heal log) |
 | `.github/workflows/scrape.yml` | Cron every 6h + optional simulated red-flag dispatch |
 | `heal-log.md` | Heal events, including failed attempts and labeled simulations |
+| `SECURITY.md` | How to report issues; secrets and data policy |
 
 ## Setup
 

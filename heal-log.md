@@ -1,6 +1,8 @@
 # Heal log
 
-Every entry is a real Scraper Studio heal. Failed attempts stay in this file.
+Real Scraper Studio heal attempts (including failures) and clearly labeled
+**SIMULATED TEST RUN** entries used to prove CI detection. Do not treat a
+simulated entry as a live site failure.
 
 ## 2026-08-19T00:56:00Z - SparkFun attempt 1 (partial)
 
