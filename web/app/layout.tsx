@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Wolverine: price and stock that heals",
+  title: "Wolverine · Scar Feed",
   description:
-    "Self-healing tracker for niche electronics stores. It doesn't matter how badly the page gets cut up. It heals.",
+    "Restock radar for niche electronics that will not cry wolf when the scraper is lying.",
 };
 
 export default function RootLayout({

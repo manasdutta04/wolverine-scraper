@@ -87,6 +87,7 @@ out of stock / backorder), product URL.
 - [x] heal-log.md populated with at least one real heal event
 - [x] Dashboard: current prices/stock table
 - [x] Dashboard: price history chart per product
-- [ ] Demo video script drafted (problem -> workflow -> live heal proof
-      via CI history -> product)
+- [x] Scar Feed signals + Heal Court (release / repair / refuse)
+- [x] Public demo URL linked in README (GitHub Pages + Docker Hub)
+- [ ] Demo video recorded and linked in README
 - [ ] LinkedIn post drafted for Daily Bugle track

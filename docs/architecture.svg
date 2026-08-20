@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 420" role="img">
+  <title>Wolverine Scar Feed architecture</title>
+  <rect width="960" height="420" fill="#0b0a08"/>
+  <text x="40" y="42" fill="#c9843a" font-family="Georgia, serif" font-size="18">Wolverine · Scar Feed</text>
+  <text x="40" y="68" fill="#8d7f6c" font-family="monospace" font-size="12">Studio collectors ’ SQLite ’ Scar Feed + Heal Court ’ public UI</text>
+
+  <rect x="40" y="100" width="180" height="90" fill="#1c1812" stroke="#2c261c"/>
+  <text x="52" y="128" fill="#ead9c2" font-family="monospace" font-size="13">Scraper Studio</text>
+  <text x="52" y="150" fill="#8d7f6c" font-family="monospace" font-size="11">4 × c_* collectors</text>
+  <text x="52" y="170" fill="#8d7f6c" font-family="monospace" font-size="11">create / run / heal</text>
+
+  <path d="M220 145 H270" stroke="#c9843a" stroke-width="2"/>
+
+  <rect x="270" y="100" width="160" height="90" fill="#1c1812" stroke="#2c261c"/>
+  <text x="282" y="128" fill="#ead9c2" font-family="monospace" font-size="13">Pipeline</text>
+  <text x="282" y="150" fill="#8d7f6c" font-family="monospace" font-size="11">parse ’ SQLite</text>
+  <text x="282" y="170" fill="#8d7f6c" font-family="monospace" font-size="11">snapshots</text>
+
+  <path d="M430 130 H480" stroke="#c9843a" stroke-width="2"/>
+  <path d="M430 160 H480" stroke="#c13a22" stroke-width="2"/>
+
+  <rect x="480" y="70" width="200" height="70" fill="#1c1812" stroke="#c9843a"/>
+  <text x="492" y="98" fill="#efb056" font-family="monospace" font-size="13">Scar Feed</text>
+  <text x="492" y="120" fill="#8d7f6c" font-family="monospace" font-size="11">restock · scarcity · deals</text>
+
+  <rect x="480" y="160" width="200" height="70" fill="#1c1812" stroke="#c13a22"/>
+  <text x="492" y="188" fill="#c13a22" font-family="monospace" font-size="13">Heal Court</text>
+  <text x="492" y="210" fill="#8d7f6c" font-family="monospace" font-size="11">release · repair · refuse</text>
+
+  <path d="M680 105 H730" stroke="#c9843a" stroke-width="2"/>
+  <path d="M680 195 H730" stroke="#c13a22" stroke-width="2"/>
+  <path d="M730 105 V195" stroke="#2c261c" stroke-width="2"/>
+  <path d="M730 150 H780" stroke="#c9843a" stroke-width="2"/>
+
+  <rect x="780" y="110" width="140" height="80" fill="#1c1812" stroke="#c8e14a"/>
+  <text x="792" y="140" fill="#c8e14a" font-family="monospace" font-size="13">Public UI</text>
+  <text x="792" y="162" fill="#8d7f6c" font-family="monospace" font-size="11">demo URL</text>
+  <text x="792" y="180" fill="#8d7f6c" font-family="monospace" font-size="11">Docker Hub</text>
+
+  <text x="40" y="260" fill="#8d7f6c" font-family="monospace" font-size="12">Trusted signals only. If Court refuses a store, Scar Feed stays quiet.</text>
+
+  <rect x="40" y="290" width="880" height="90" fill="#14110d" stroke="#2c261c"/>
+  <text x="56" y="322" fill="#ead9c2" font-family="monospace" font-size="13">Adafruit · SparkFun · Pimoroni · The Pi Hut</text>
+  <text x="56" y="348" fill="#8d7f6c" font-family="monospace" font-size="12">Long-tail hobby stores · public listings · same c_* IDs after heal</text>
+  <text x="56" y="370" fill="#8d7f6c" font-family="monospace" font-size="12">CI cron every 6h · simulate_failure proves detection without breaking live collectors</text>
+</svg>

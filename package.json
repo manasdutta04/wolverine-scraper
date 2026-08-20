@@ -2,7 +2,7 @@
   "name": "wolverine-scraper",
   "version": "0.1.2",
   "private": true,
-  "description": "Self-healing price and stock tracker for niche electronics stores.",
+  "description": "Scar Feed: restock radar for niche electronics that will not cry wolf when the scraper is lying.",
   "type": "module",
   "engines": {
     "node": ">=20"
@@ -11,8 +11,10 @@
     "scrape": "node pipeline/run.js",
     "check": "node heal/check.js",
     "heal": "node heal/check.js --fix",
-    "web:dev": "npm run dev --prefix web",
-    "web:build": "npm run build --prefix web"
+    "scar:export": "node scar/export.js",
+    "test": "node --test scar/scar.test.js",
+    "web:dev": "npm run scar:export && npm run dev --prefix web",
+    "web:build": "npm run scar:export && npm run build --prefix web"
   },
   "dependencies": {
     "better-sqlite3": "^12.2.0"

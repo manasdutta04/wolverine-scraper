@@ -7,6 +7,7 @@ import { scrapeStore } from "../pipeline/run.js";
 import { evaluateStore, healPromptFor } from "./flags.js";
 import { fixtureRowsFor } from "./fixture.js";
 import { appendHealLog } from "./log.js";
+import { courtVerdict, previewLooksCloned } from "../scar/gate.js";
 
 function rowsByStore(snapshots) {
   const grouped = new Map();
@@ -26,16 +27,6 @@ export function checkSnapshots(snapshots) {
     results.push({ store, evaluation });
   }
   return results;
-}
-
-function previewLooksCloned(preview) {
-  const rows = Array.isArray(preview) ? preview : [];
-  if (rows.length < 2) return false;
-  const prices = new Set(
-    rows.map((row) => JSON.stringify(row.price ?? row.amount ?? null)),
-  );
-  const stocks = new Set(rows.map((row) => String(row.stock_status ?? "")));
-  return prices.size === 1 && stocks.size === 1;
 }
 
 async function healStoreSimulated(store, evaluation) {
@@ -135,11 +126,11 @@ async function healStore(store, evaluation) {
     return { ok: false, skipped: true };
   }
 
-  console.log(`healing ${store.id} (${store.collectorId})`);
+  console.log(`Heal Court: repairing ${store.id} (${store.collectorId})`);
   console.log(`  prompt: ${prompt}`);
 
   try {
-    await runBdata([
+    const envelope = await runBdataJson([
       "scraper",
       "heal",
       store.collectorId,
@@ -149,16 +140,38 @@ async function healStore(store, evaluation) {
       "--timeout",
       "1500",
     ]);
-    await runBdata([
-      "scraper",
-      "approve",
-      store.collectorId,
-      "--auto-save",
-      "--url",
-      store.url,
-      "--timeout",
-      "1500",
-    ]);
+
+    const preview = envelope.preview_result || [];
+    const verdict = courtVerdict(evaluation, { preview });
+    console.log(`  court verdict: ${verdict.verdict} - ${verdict.reason}`);
+
+    if (verdict.verdict === "refuse" || verdict.action === "reject") {
+      if (envelope.status === "awaiting_approval") {
+        await runBdata(["scraper", "approve", store.collectorId, "--reject"]);
+      }
+      appendHealLog({
+        timestamp,
+        collectorId: store.collectorId,
+        store: store.id,
+        whatBroke,
+        healPrompt: prompt,
+        outcome: `Heal Court REFUSE: ${verdict.reason}`,
+      });
+      return { ok: false, refused: true, verdict };
+    }
+
+    if (envelope.status === "awaiting_approval") {
+      await runBdata([
+        "scraper",
+        "approve",
+        store.collectorId,
+        "--auto-save",
+        "--url",
+        store.url,
+        "--timeout",
+        "1500",
+      ]);
+    }
 
     const scrapedAt = new Date().toISOString();
     const db = openDb();
@@ -177,9 +190,9 @@ async function healStore(store, evaluation) {
         store: store.id,
         whatBroke,
         healPrompt: prompt,
-        outcome: `heal + approve + re-run still failing: ${recheck.reasons.join("; ")}`,
+        outcome: `Heal Court repair still failing after re-run: ${recheck.reasons.join("; ")}`,
       });
-      return { ok: false, recheck };
+      return { ok: false, recheck, verdict };
     }
 
     appendHealLog({
@@ -188,17 +201,18 @@ async function healStore(store, evaluation) {
       store: store.id,
       whatBroke,
       healPrompt: prompt,
-      outcome: `heal + approve + re-run passed (${rerun.rows.length} rows)`,
+      outcome: `Heal Court REPAIR passed (${rerun.rows.length} rows)`,
     });
-    return { ok: true, recheck };
+    return { ok: true, recheck, verdict };
   } catch (err) {
+    const verdict = courtVerdict(evaluation, { healError: err.message });
     appendHealLog({
       timestamp,
       collectorId: store.collectorId,
       store: store.id,
       whatBroke,
       healPrompt: prompt,
-      outcome: `heal failed: ${err.message}`,
+      outcome: `Heal Court REFUSE: ${verdict.reason}`,
     });
     throw err;
   }
@@ -276,6 +290,10 @@ export async function runCheck({ fix = false, simulateFailure = null } = {}) {
 
   const stillFailing = [];
   for (const { store, evaluation } of failing) {
+    const pre = courtVerdict(evaluation);
+    console.log(
+      `Heal Court ${store.id}: ${pre.verdict} (${pre.action}) - ${pre.reason}`,
+    );
     const outcome = await healStore(store, evaluation);
     if (!outcome.ok) stillFailing.push(store.id);
   }
