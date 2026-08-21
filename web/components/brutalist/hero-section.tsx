@@ -11,15 +11,6 @@ export function HeroSection() {
   return (
     <section className="relative w-full px-12 pt-6 pb-12 lg:px-24 lg:pt-10 lg:pb-16">
       <div className="flex flex-col items-center text-center">
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.4, ease }}
-          className="text-[10px] tracking-[0.25em] uppercase text-[#ea580c] font-mono mb-4"
-        >
-          Scrape-Verse · Best Use of Bright Data
-        </motion.p>
-
         <motion.h1
           initial={{ opacity: 0, y: 30, filter: "blur(8px)" }}
           animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}

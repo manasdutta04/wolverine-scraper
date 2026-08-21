@@ -1,4 +1,11 @@
 export const GITHUB_REPO = "https://github.com/manasdutta04/wolverine-scraper";
+export const LIVE_DEMO = "https://wolverine-scraper.vercel.app";
+export const DOCKER_HUB =
+  "https://hub.docker.com/r/manasdutta04/wolverine-dashboard";
+export const DOCKER_IMAGE = "manasdutta04/wolverine-dashboard:latest";
+export const DOCKER_PULL = `docker pull ${DOCKER_IMAGE}`;
+export const DOCKER_RUN =
+  "docker run --rm -p 3000:3000 manasdutta04/wolverine-dashboard:latest";
 export const HEAL_LOG =
   "https://github.com/manasdutta04/wolverine-scraper/blob/main/heal-log.md";
 export const SAMPLE_OUTPUT =
@@ -31,6 +38,10 @@ export const APP_NAV_GROUPS = [
       { href: "/app/heals", label: "Heals", id: "heals", icon: "✦" },
       { href: "/app/studio", label: "Collectors", id: "studio", icon: "⬡" },
     ],
+  },
+  {
+    label: "Guide",
+    items: [{ href: "/docs", label: "Docs", id: "docs", icon: "▤" }],
   },
 ] as const;
 

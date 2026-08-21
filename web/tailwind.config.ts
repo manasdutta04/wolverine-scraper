@@ -8,8 +8,10 @@ const config: Config = {
   content: [
     "./components/brutalist/**/*.{ts,tsx}",
     "./components/LandingPage.tsx",
+    "./components/DocsPage.tsx",
     "./app/page.tsx",
     "./app/contact/**/*.{ts,tsx}",
+    "./app/docs/**/*.{ts,tsx}",
   ],
   theme: {
     extend: {

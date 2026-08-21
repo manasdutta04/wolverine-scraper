@@ -526,6 +526,99 @@
   gap: 8px;
 }
 
+/* Docs page inside app chrome */
+.app-frame .docs-toc {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 0 0 22px;
+}
+
+.app-frame .docs-toc a {
+  padding: 8px 12px;
+  border: 1px solid var(--fg);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.app-frame .docs-toc a:hover {
+  color: var(--bg);
+  background: var(--fg);
+}
+
+.app-frame .docs-stack {
+  display: grid;
+  gap: 0;
+  border: 2px solid var(--fg);
+}
+
+.app-frame .docs-section {
+  scroll-margin-top: 72px;
+}
+
+.app-frame .docs-card {
+  border-right: 0 !important;
+  border-bottom: 1px solid hsl(0 0% 75%);
+}
+
+.app-frame .docs-section:last-child .docs-card {
+  border-bottom: 0;
+}
+
+.app-frame .docs-body {
+  display: grid;
+  gap: 12px;
+  font-family: var(--font-mono), monospace;
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--muted);
+}
+
+.app-frame .docs-body p {
+  margin: 0;
+}
+
+.app-frame .docs-body strong {
+  color: var(--fg);
+}
+
+.app-frame .docs-body a {
+  color: var(--fg);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.app-frame .docs-body a:hover {
+  color: var(--accent);
+}
+
+.app-frame .docs-body code {
+  color: var(--fg);
+  font-size: 0.92em;
+}
+
+.app-frame .docs-code {
+  margin: 4px 0 0;
+  padding: 14px 16px;
+  border: 2px solid var(--fg);
+  background: var(--fg);
+  color: var(--bg);
+  font-family: var(--font-mono), monospace;
+  font-size: 11px;
+  line-height: 1.55;
+  overflow-x: auto;
+  white-space: pre;
+}
+
+.app-frame .docs-card .collector-list span {
+  color: var(--muted);
+  font-size: 12px;
+}
+
 @media (max-width: 900px) {
   .app-frame {
     grid-template-columns: 1fr;

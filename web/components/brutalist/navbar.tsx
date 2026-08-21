@@ -118,6 +118,12 @@ export function Navbar() {
             >
               GitHub
             </a>
+            <Link
+              href="/docs"
+              className="hidden md:inline-flex h-9 items-center border-2 border-foreground px-3 text-[10px] font-mono tracking-[0.16em] uppercase text-foreground hover:bg-foreground hover:text-background transition-colors duration-150"
+            >
+              Docs
+            </Link>
             <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
               <Link
                 href="/app"

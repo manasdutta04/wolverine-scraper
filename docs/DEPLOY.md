@@ -11,7 +11,8 @@ npx vercel --prod --cwd web
 ```
 
 Paste the resulting `https://….vercel.app` URL into `README.md` if it changes.
-Current demo: https://wolverine-scraper.vercel.app
+**Current demo:** https://wolverine-scraper.vercel.app/
+**In-app docs:** https://wolverine-scraper.vercel.app/docs
 
 `web/public/data/scar.json` is committed so builds need no Bright Data key.
 Re-export before release: `npm run scar:export`

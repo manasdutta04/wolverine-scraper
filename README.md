@@ -6,15 +6,16 @@ Bright Data Scraper Studio collectors scrape Adafruit, SparkFun, Pimoroni, and T
 Scar Feed turns those snapshots into plain-English scarcity and restock signals.
 Heal Court decides **release / repair / refuse** so a broken scraper cannot invent a restock.
 
-**Live demo:** [wolverine-scraper.vercel.app](https://wolverine-scraper.vercel.app) (Root Directory `web`) · [docs/DEPLOY.md](docs/DEPLOY.md)
+**Live demo:** [https://wolverine-scraper.vercel.app](https://wolverine-scraper.vercel.app/) (Root Directory `web`) · [Docs](https://wolverine-scraper.vercel.app/docs) · [docs/DEPLOY.md](docs/DEPLOY.md)
 
 ![Architecture](docs/architecture.svg)
 
 ## Try it
 
-1. Open the **landing** (`/`) — hero, field showcase video, problem → product → Studio → proof.
+1. Open the **live demo**: [wolverine-scraper.vercel.app](https://wolverine-scraper.vercel.app/)
 2. Click **Get Started** → enter the **app** (`/app`) — Scar Feed, Heal Court, Studio collectors.
-3. Or Docker:
+3. Read **[/docs](https://wolverine-scraper.vercel.app/docs)** for web, Docker, and local setup.
+4. Or Docker:
 
 ```bash
 docker pull manasdutta04/wolverine-dashboard:latest
@@ -25,25 +26,21 @@ docker run --rm -p 3000:3000 manasdutta04/wolverine-dashboard:latest
 
 | Path | Role |
 | --- | --- |
-| `/` | Marketing: hero, showcase video, problem, product, Studio, proof |
+| `/` | Marketing landing |
 | `/app` | Product workspace overview |
 | `/app/feed` | Scar Feed signals |
 | `/app/court` | Heal Court |
 | `/app/catalog` | Catalog |
 | `/app/heals` | Heal journal |
 | `/app/studio` | Pinned collectors + pipeline |
+| `/docs` | Web, Docker, local, Studio docs |
 | `/contact` | Links |
 
 Legacy `/product`, `/feed`, `/court`, `/catalog`, `/case-studies` redirect into `/app/*`.
 
 ## Screenshots
 
-| | |
-| --- | --- |
-| Landing hero | ![Landing](docs/screenshots/scar-feed-desktop.png) |
-| Showcase video | ![Showcase](docs/screenshots/landing-showcase.png) |
-| App workspace | ![App](docs/screenshots/scar-feed-app.png) |
-| Landing mobile | ![Mobile](docs/screenshots/scar-feed-mobile.png) |
+![Scar Feed app](docs/screenshots/app.png)
 
 ## How Bright Data Scraper Studio is used
 

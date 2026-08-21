@@ -4,7 +4,12 @@ import Link from "next/link";
 import { useEffect } from "react";
 import { Navbar } from "@/components/brutalist/navbar";
 import { Footer } from "@/components/brutalist/footer";
-import { GITHUB_REPO } from "@/lib/nav";
+import {
+  DOCKER_PULL,
+  DOCKER_RUN,
+  GITHUB_REPO,
+  LIVE_DEMO,
+} from "@/lib/nav";
 
 export default function ContactPage() {
   useEffect(() => {
@@ -40,10 +45,35 @@ export default function ContactPage() {
               Public demo — no account
             </h1>
             <p className="text-xs lg:text-sm font-mono text-muted-foreground leading-relaxed max-w-xl">
-              Get Started opens the Scar Feed app. Star the repo if this is useful
-              for Scrape-Verse. No Bright Data key on the site.
+              Live site:{" "}
+              <a
+                href={LIVE_DEMO}
+                target="_blank"
+                rel="noreferrer"
+                className="text-foreground underline underline-offset-4"
+              >
+                {LIVE_DEMO}
+              </a>
+              . Get Started opens the Scar Feed app. Full runbooks live on{" "}
+              <Link href="/docs" className="text-foreground underline underline-offset-4">
+                /docs
+              </Link>
+              .
             </p>
             <ul className="flex flex-col gap-0 border-2 border-foreground">
+              <li className="border-b-2 border-foreground px-4 py-4">
+                <a
+                  href={LIVE_DEMO}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="text-sm font-mono font-bold uppercase tracking-wide hover:text-[#ea580c] transition-colors"
+                >
+                  Live Vercel demo
+                </a>
+                <p className="text-xs font-mono text-muted-foreground mt-2 break-all">
+                  {LIVE_DEMO}
+                </p>
+              </li>
               <li className="border-b-2 border-foreground px-4 py-4">
                 <Link
                   href="/app"
@@ -53,6 +83,17 @@ export default function ContactPage() {
                 </Link>
                 <p className="text-xs font-mono text-muted-foreground mt-2">
                   Overview, Feed, Heal Court, Catalog, Heals, Studio.
+                </p>
+              </li>
+              <li className="border-b-2 border-foreground px-4 py-4">
+                <Link
+                  href="/docs"
+                  className="text-sm font-mono font-bold uppercase tracking-wide hover:text-[#ea580c] transition-colors"
+                >
+                  Documentation
+                </Link>
+                <p className="text-xs font-mono text-muted-foreground mt-2">
+                  Web, Docker, local pipeline, Studio collectors.
                 </p>
               </li>
               <li className="border-b-2 border-foreground px-4 py-4">
@@ -69,17 +110,12 @@ export default function ContactPage() {
                 </p>
               </li>
               <li className="px-4 py-4">
-                <a
-                  href="https://hub.docker.com/r/manasdutta04/wolverine-dashboard"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="text-sm font-mono font-bold uppercase tracking-wide hover:text-[#ea580c] transition-colors"
-                >
-                  Docker Hub
-                </a>
-                <p className="text-xs font-mono text-muted-foreground mt-2">
-                  docker pull manasdutta04/wolverine-dashboard:latest
-                </p>
+                <span className="text-sm font-mono font-bold uppercase tracking-wide">
+                  Docker pull
+                </span>
+                <pre className="mt-3 border-2 border-foreground bg-foreground text-background p-3 text-[11px] font-mono overflow-x-auto whitespace-pre">
+                  {`${DOCKER_PULL}\n${DOCKER_RUN}`}
+                </pre>
               </li>
             </ul>
           </div>

@@ -6,6 +6,7 @@ import { HeroSection } from "@/components/brutalist/hero-section";
 import { FeatureGrid } from "@/components/brutalist/feature-grid";
 import { AboutSection } from "@/components/brutalist/about-section";
 import { StudioProofSection } from "@/components/brutalist/studio-proof-section";
+import { DeploySection } from "@/components/brutalist/deploy-section";
 import { Footer } from "@/components/brutalist/footer";
 
 export function LandingPage() {
@@ -22,6 +23,7 @@ export function LandingPage() {
         <FeatureGrid />
         <AboutSection />
         <StudioProofSection />
+        <DeploySection />
       </main>
       <Footer />
     </div>

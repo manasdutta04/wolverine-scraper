@@ -2,18 +2,15 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { GITHUB_REPO } from "@/lib/nav";
+import { DOCKER_HUB, GITHUB_REPO, LIVE_DEMO } from "@/lib/nav";
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
 const LINKS = [
+  { label: "Docs", href: "/docs" },
   { label: "Contact", href: "/contact" },
-  { label: "Status", href: "/app" },
-  {
-    label: "Docker",
-    href: "https://hub.docker.com/r/manasdutta04/wolverine-dashboard",
-    external: true,
-  },
+  { label: "Live", href: LIVE_DEMO, external: true },
+  { label: "Docker", href: DOCKER_HUB, external: true },
   { label: "GitHub", href: GITHUB_REPO, external: true },
 ] as const;
 
@@ -34,6 +31,14 @@ export function Footer() {
           <span className="text-[10px] font-mono tracking-widest text-muted-foreground">
             WILL NOT CRY WOLF · BRIGHT DATA SCRAPER STUDIO
           </span>
+          <a
+            href={LIVE_DEMO}
+            target="_blank"
+            rel="noreferrer"
+            className="text-[10px] font-mono tracking-widest text-[#ea580c] mt-1 hover:underline break-all"
+          >
+            {LIVE_DEMO.replace("https://", "")}
+          </a>
         </div>
         <div className="flex items-center gap-6 flex-wrap">
           {LINKS.map((link, i) => (
