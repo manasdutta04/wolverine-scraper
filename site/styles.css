@@ -184,12 +184,13 @@ button {
   align-items: center;
   justify-content: center;
   height: clamp(44px, 5.2vw, 48px);
-  padding: 0 18px;
+  padding: 0 16px;
   border-radius: 999px;
   background: var(--pill-dark);
   color: var(--sign-in-text);
   font-weight: 500;
-  font-size: clamp(13px, 1.4vw, 15px);
+  font-size: clamp(12px, 1.3vw, 14px);
+  white-space: nowrap;
   box-shadow: var(--nav-shadow);
   transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
 }

@@ -154,12 +154,13 @@ button {
   align-items: center;
   justify-content: center;
   height: 48px;
-  padding: 0 18px;
+  padding: 0 16px;
   border-radius: 999px;
   background: var(--pill-dark);
   color: var(--sign-in-text);
   font-weight: 500;
-  font-size: 14px;
+  font-size: 13px;
+  white-space: nowrap;
   box-shadow: var(--nav-shadow);
   transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
 }
