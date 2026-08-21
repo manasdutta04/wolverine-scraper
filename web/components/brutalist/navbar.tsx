@@ -46,15 +46,15 @@ export function Navbar() {
       initial={{ opacity: 0, y: -20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-      className="w-full px-4 pt-4 lg:px-6 lg:pt-6 sticky top-0 z-40"
+      className="w-full px-4 pt-3 lg:px-6 lg:pt-4 sticky top-0 z-40 shrink-0"
     >
       <nav className="w-full border-2 border-foreground bg-background px-3 py-2 lg:px-4">
-        <div className="flex items-center justify-between gap-3">
+        <div className="grid grid-cols-[1fr_auto] md:grid-cols-[1fr_auto_1fr] items-center gap-3">
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.15, duration: 0.4 }}
-            className="min-w-0"
+            className="min-w-0 justify-self-start"
           >
             <Link href="/" className="flex items-center gap-0 group">
               <span className="flex h-9 w-9 items-center justify-center bg-[#ea580c] text-background shrink-0">
@@ -68,7 +68,7 @@ export function Navbar() {
             </Link>
           </motion.div>
 
-          <div className="hidden md:flex items-center gap-0 border-2 border-foreground">
+          <div className="hidden md:flex items-center justify-center gap-0 border-2 border-foreground justify-self-center">
             {NAV_LINKS.map((link, i) => {
               const isActive = active === link.id;
               return (
@@ -101,9 +101,9 @@ export function Navbar() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.45, duration: 0.4 }}
-            className="flex items-center gap-2 shrink-0"
+            className="flex items-center gap-2 shrink-0 justify-self-end"
           >
-            <span className="hidden lg:inline-flex items-center gap-2 border border-foreground px-2 py-1.5">
+            <span className="hidden xl:inline-flex items-center gap-2 border border-foreground px-2 py-1.5">
               <span className="h-1.5 w-1.5 bg-[#ea580c] animate-blink" />
               <span className="text-[9px] font-mono tracking-[0.18em] uppercase text-muted-foreground">
                 Live
@@ -114,13 +114,13 @@ export function Navbar() {
               href={GITHUB_REPO}
               target="_blank"
               rel="noreferrer"
-              className="hidden sm:inline-flex h-9 items-center border-2 border-foreground px-3 text-[10px] font-mono tracking-[0.16em] uppercase text-foreground hover:bg-foreground hover:text-background transition-colors duration-150"
+              className="hidden lg:inline-flex h-9 items-center border-2 border-foreground px-3 text-[10px] font-mono tracking-[0.16em] uppercase text-foreground hover:bg-foreground hover:text-background transition-colors duration-150"
             >
               GitHub
             </a>
             <Link
               href="/docs"
-              className="hidden md:inline-flex h-9 items-center border-2 border-foreground px-3 text-[10px] font-mono tracking-[0.16em] uppercase text-foreground hover:bg-foreground hover:text-background transition-colors duration-150"
+              className="hidden lg:inline-flex h-9 items-center border-2 border-foreground px-3 text-[10px] font-mono tracking-[0.16em] uppercase text-foreground hover:bg-foreground hover:text-background transition-colors duration-150"
             >
               Docs
             </Link>
@@ -156,7 +156,7 @@ export function Navbar() {
                 key={link.href}
                 href={link.href}
                 onClick={() => setOpen(false)}
-                className={`flex items-center gap-3 px-3 py-3 text-[11px] font-mono tracking-[0.16em] uppercase border-b border-border last:border-b-0 ${
+                className={`flex items-center justify-center gap-3 px-3 py-3 text-[11px] font-mono tracking-[0.16em] uppercase border-b border-border last:border-b-0 ${
                   active === link.id
                     ? "bg-foreground text-background"
                     : "text-foreground"

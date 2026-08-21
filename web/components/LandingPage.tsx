@@ -17,9 +17,11 @@ export function LandingPage() {
 
   return (
     <div className="min-h-screen dot-grid-bg">
-      <Navbar />
-      <main>
+      <div className="flex min-h-svh flex-col">
+        <Navbar />
         <HeroSection />
+      </div>
+      <main>
         <FeatureGrid />
         <AboutSection />
         <StudioProofSection />

@@ -57,7 +57,7 @@ export function WorkflowDiagram() {
   }, []);
 
   if (!mounted) {
-    return <div className="h-[200px] w-full" />;
+    return <div className="h-[min(22vh,168px)] w-full" />;
   }
 
   const centerX = 400;
