@@ -1,10 +1,8 @@
 import { CatalogClient } from "@/components/CatalogClient";
-import { loadScar } from "@/lib/scar";
 
 export const metadata = { title: "Catalog" };
 
 export default function AppCatalogPage() {
-  const data = loadScar();
   return (
     <>
       <section className="page-hero">
@@ -15,7 +13,7 @@ export default function AppCatalogPage() {
           on top of Bright Data&apos;s JSON.
         </p>
       </section>
-      <CatalogClient data={data} />
+      <CatalogClient />
     </>
   );
 }

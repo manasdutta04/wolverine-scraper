@@ -7,15 +7,12 @@ import { Cpu } from "lucide-react";
 import { APP_NAV, APP_NAV_GROUPS, GITHUB_REPO } from "@/lib/nav";
 import type { ScarPayload } from "@/lib/types";
 import { formatWhen } from "@/lib/format";
+import { ScarProvider, useScar } from "@/components/ScarProvider";
+import { FieldConsole } from "@/components/FieldConsole";
 
-export function AppShell({
-  children,
-  data,
-}: {
-  children: React.ReactNode;
-  data: ScarPayload;
-}) {
+function AppShellInner({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
+  const { data } = useScar();
   const trusted = (data.feed || []).filter((s) => s.trust).length;
   const bad = (data.pulse || []).filter((p) => !p.trust).length;
 
@@ -107,8 +104,25 @@ export function AppShell({
           </div>
         </header>
 
-        <div className="app-content">{children}</div>
+        <div className="app-content">
+          <FieldConsole />
+          {children}
+        </div>
       </div>
     </div>
+  );
+}
+
+export function AppShell({
+  children,
+  data,
+}: {
+  children: React.ReactNode;
+  data: ScarPayload;
+}) {
+  return (
+    <ScarProvider initialData={data}>
+      <AppShellInner>{children}</AppShellInner>
+    </ScarProvider>
   );
 }

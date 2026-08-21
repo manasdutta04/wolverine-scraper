@@ -13,7 +13,7 @@ Heal Court decides **release / repair / refuse** so a broken scraper cannot inve
 ## Try it
 
 1. Open the **live demo**: [wolverine-scraper.vercel.app](https://wolverine-scraper.vercel.app/)
-2. Click **Get Started** → enter the **app** (`/app`) — Scar Feed, Heal Court, Studio collectors.
+2. Enter **`/app`** — Field Console polls live `scar.json`; use **Run field scrape** (or [Actions](https://github.com/manasdutta04/wolverine-scraper/actions/workflows/scrape.yml)) to drive Studio via CI.
 3. Read **[/docs](https://wolverine-scraper.vercel.app/docs)** for web, Docker, and local setup.
 4. Or Docker:
 
@@ -47,8 +47,8 @@ Legacy `/product`, `/feed`, `/court`, `/catalog`, `/case-studies` redirect into 
 1. `bdata scraper create` built a custom collector per store (IDs pinned below - never recreate).
 2. `bdata scraper run` returns structured JSON; `npm run scrape` writes `db/wolverine.db`.
 3. Red flags go to **Heal Court**. Repair runs `bdata scraper heal` then `approve`. Refuse rejects a still-cloned preview.
-4. GitHub Actions cron scrapes + heals. Optional `simulate_failure` proves detection without changing a live collector.
-5. `npm run scar:export` writes `web/public/data/scar.json` for the public demo (no Bright Data key on Vercel).
+4. GitHub Actions cron scrapes + heals + `scar:export` (commits `scar.json`). Optional `simulate_failure` proves detection without changing a live collector.
+5. Public `/app` polls `scar.json` and can `workflow_dispatch` that job via optional Vercel `GITHUB_PAT` — **no Bright Data key on Vercel**.
 
 Example output: [`examples/sample-output.json`](examples/sample-output.json) · Heal journal: [`heal-log.md`](heal-log.md)
 

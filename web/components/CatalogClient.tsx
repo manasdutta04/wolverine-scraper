@@ -1,14 +1,16 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { formatPrice } from "@/lib/format";
-import type { ScarPayload, Snapshot } from "@/lib/types";
+import { formatPrice, formatWhen } from "@/lib/format";
+import type { Snapshot } from "@/lib/types";
+import { useScar } from "@/components/ScarProvider";
 
 function key(row: Snapshot) {
   return `${row.store}::${row.product_url || row.product_name}`;
 }
 
-export function CatalogClient({ data }: { data: ScarPayload }) {
+export function CatalogClient() {
+  const { data } = useScar();
   const [store, setStore] = useState("all");
   const [query, setQuery] = useState("");
   const [shown, setShown] = useState(60);
@@ -63,6 +65,8 @@ export function CatalogClient({ data }: { data: ScarPayload }) {
       </div>
       <p className="meta-line">
         Showing {Math.min(shown, rows.length)} of {rows.length}
+        {" · "}
+        as of {formatWhen(data.lastScrapedAt)}
       </p>
       <div className="table-wrap">
         <table>

@@ -50,6 +50,10 @@ jobs:
         if: ${{ github.event_name != 'workflow_dispatch' || github.event.inputs.simulate_failure == '' }}
         run: npm run heal
 
+      - name: Export Scar Feed snapshot
+        if: always()
+        run: npm run scar:export
+
       - name: Upload SQLite snapshot
         if: always()
         uses: actions/upload-artifact@v4
@@ -58,17 +62,18 @@ jobs:
           path: |
             db/wolverine.db
             heal-log.md
+            web/public/data/scar.json
           if-no-files-found: warn
 
-      - name: Commit heal-log if it changed
+      - name: Commit scar feed snapshot if it changed
         if: always()
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add heal-log.md
+          git add heal-log.md web/public/data/scar.json
           if git diff --staged --quiet; then
-            echo "heal-log.md unchanged"
+            echo "scar feed snapshot unchanged"
           else
-            git commit -m "ci: record scrape/heal audit trail"
+            git commit -m "ci: refresh scar feed snapshot"
             git push
           fi

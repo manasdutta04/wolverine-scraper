@@ -1,7 +1,10 @@
-import { formatWhen } from "@/lib/format";
-import type { ScarPayload } from "@/lib/types";
+"use client";
 
-export function CasesView({ data }: { data: ScarPayload }) {
+import { formatWhen } from "@/lib/format";
+import { useScar } from "@/components/ScarProvider";
+
+export function CasesView() {
+  const { data } = useScar();
   const events = data.heals || [];
   return (
     <>

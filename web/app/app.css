@@ -619,6 +619,163 @@
   font-size: 12px;
 }
 
+.app-frame .field-console {
+  margin: 0 0 22px;
+  padding: 16px 18px;
+  border: 2px solid var(--fg);
+  background: color-mix(in srgb, var(--accent, #ea580c) 8%, var(--bg));
+}
+
+.app-frame .field-console-head {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px 18px;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.app-frame .field-console-title {
+  display: block;
+  font-family: var(--font-mono), monospace;
+  font-size: 15px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.app-frame .field-console-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+.app-frame .field-console-actions a.chip {
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+}
+
+.app-frame .field-console-status {
+  margin: 12px 0 0;
+  font-family: var(--font-mono), monospace;
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.app-frame .feed-item.is-new {
+  animation: scar-flash 1.8s ease-out;
+}
+
+@keyframes scar-flash {
+  0% {
+    background: color-mix(in srgb, var(--accent, #ea580c) 28%, transparent);
+  }
+  100% {
+    background: transparent;
+  }
+}
+
+.app-frame button.court-card {
+  display: block;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+  font: inherit;
+  color: inherit;
+}
+
+.app-frame button.court-card:hover,
+.app-frame button.court-card:focus-visible {
+  background: color-mix(in srgb, var(--accent, #ea580c) 10%, transparent);
+  outline: none;
+}
+
+.app-frame .court-drawer-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  background: rgba(0, 0, 0, 0.35);
+  display: flex;
+  justify-content: flex-end;
+}
+
+.app-frame .court-drawer {
+  width: min(420px, 100%);
+  height: 100%;
+  overflow: auto;
+  padding: 22px 20px;
+  background: var(--bg);
+  border-left: 2px solid var(--fg);
+  box-shadow: -8px 0 0 color-mix(in srgb, var(--accent, #ea580c) 40%, transparent);
+}
+
+.app-frame .court-drawer-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.app-frame .court-drawer-head h2 {
+  margin: 0;
+  font-size: 18px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-family: var(--font-mono), monospace;
+}
+
+.app-frame .court-dl {
+  margin: 14px 0 0;
+  display: grid;
+  gap: 10px;
+}
+
+.app-frame .court-dl dt {
+  font-family: var(--font-mono), monospace;
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.app-frame .court-dl dd {
+  margin: 4px 0 0;
+  font-size: 13px;
+  word-break: break-all;
+}
+
+.app-frame .studio-copy-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.app-frame .studio-cmd-list {
+  list-style: none;
+  margin: 10px 0 0;
+  padding: 0;
+  display: grid;
+  gap: 8px;
+}
+
+.app-frame .studio-cmd-list li {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px solid hsl(0 0% 80%);
+}
+
+.app-frame .studio-cmd-list code {
+  font-size: 12px;
+  word-break: break-all;
+}
+
 @media (max-width: 900px) {
   .app-frame {
     grid-template-columns: 1fr;

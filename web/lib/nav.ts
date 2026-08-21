@@ -12,6 +12,10 @@ export const SAMPLE_OUTPUT =
   "https://github.com/manasdutta04/wolverine-scraper/blob/main/examples/sample-output.json";
 export const ACTIONS =
   "https://github.com/manasdutta04/wolverine-scraper/actions";
+export const ACTIONS_WORKFLOW =
+  "https://github.com/manasdutta04/wolverine-scraper/actions/workflows/scrape.yml";
+export const GITHUB_OWNER = "manasdutta04";
+export const GITHUB_REPO_NAME = "wolverine-scraper";
 export const SHOWCASE_VIDEO =
   "https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260809_012548_ef22562c-c0ae-4816-ad9d-f8922af4e6a7.mp4";
 

@@ -1,10 +1,8 @@
 import { CourtView } from "@/components/CourtView";
-import { loadScar } from "@/lib/scar";
 
 export const metadata = { title: "Heal Court" };
 
 export default function AppCourtPage() {
-  const data = loadScar();
   return (
     <>
       <section className="page-hero">
@@ -16,7 +14,7 @@ export default function AppCourtPage() {
           and suppresses that store&apos;s signals.
         </p>
       </section>
-      <CourtView data={data} />
+      <CourtView />
     </>
   );
 }

@@ -89,12 +89,22 @@ export function DocsPage() {
             <p>
               Next.js app in <code>web/</code>. Vercel Root Directory ={" "}
               <code>web</code>. Builds need no Bright Data key —{" "}
-              <code>web/public/data/scar.json</code> is committed.
+              <code>web/public/data/scar.json</code> is committed and refreshed
+              by CI after every scrape/heal.
+            </p>
+            <p style={{ marginTop: 10 }}>
+              <strong>Field Console</strong> on <code>/app</code> polls{" "}
+              <code>/data/scar.json</code> every 15s.{" "}
+              <strong>Run field scrape</strong> calls{" "}
+              <code>POST /api/field/refresh</code>, which dispatches GitHub
+              Actions <code>wolverine-scrape</code> when optional Vercel secret{" "}
+              <code>GITHUB_PAT</code> is set. Bright Data stays in Actions only.
+              Without the PAT, the button opens the workflow Run page.
             </p>
             <ul className="collector-list" style={{ marginTop: 12 }}>
               {[
                 ["/", "Marketing landing"],
-                ["/app", "Product workspace"],
+                ["/app", "Product workspace + Field Console"],
                 ["/app/feed", "Scar Feed"],
                 ["/app/court", "Heal Court"],
                 ["/app/studio", "Collectors"],
@@ -112,7 +122,8 @@ export function DocsPage() {
 npx vercel link --cwd web
 npx vercel --prod --cwd web`}</CodeBlock>
             <p className="meta-line">
-              After pipeline changes: <code>npm run scar:export</code>
+              After local pipeline changes: <code>npm run scar:export</code>. CI
+              also exports + commits the snapshot automatically.
             </p>
           </DocCard>
         </section>

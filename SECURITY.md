@@ -30,11 +30,14 @@ stop and change the target.
 
 | Secret | Where it belongs | Never |
 | --- | --- | --- |
-| `BRIGHTDATA_API_KEY` | Local env / `.env` (gitignored) / GitHub Actions secrets | In commits, Docker Hub descriptions, demo recordings, issue text |
+| `BRIGHTDATA_API_KEY` | Local env / `.env` (gitignored) / GitHub Actions secrets | In commits, Vercel, client bundles, Docker Hub descriptions, demo recordings, issue text |
+| `GITHUB_PAT` (optional) | Vercel env only — `actions:write` to dispatch `wolverine-scrape` | Bright Data access; do not grant more scopes than needed |
 | Bright Data session from `bdata login` | Developer machine only | Shared or committed |
 
-CI uses repository secret `BRIGHTDATA_API_KEY`. Mask keys in terminal
-recordings. Prefer a throwaway or rotated key for demos.
+CI uses repository secret `BRIGHTDATA_API_KEY`. The public Next.js demo may
+use optional `GITHUB_PAT` solely to trigger that workflow; scrapes and heals
+still run in Actions. Mask keys in terminal recordings. Prefer a throwaway or
+rotated key for demos.
 
 Rotate the key immediately if it appears in a log, screenshot, or public gist.
 
@@ -62,18 +65,20 @@ Internet (public storefront HTML)
         │
         ▼
 Bright Data Scraper Studio (proxies, run, heal)
-        │  BRIGHTDATA_API_KEY
+        │  BRIGHTDATA_API_KEY  (GitHub Actions / local only)
         ▼
-Local / CI Node pipeline  →  SQLite snapshots
+Local / CI Node pipeline  →  SQLite snapshots → scar:export
         │
         ▼
-Next.js dashboard (read-only DB + heal-log.md)
+Next.js /app (polls scar.json; optional GITHUB_PAT → workflow_dispatch)
 ```
 
 - Extraction runs on Bright Data infrastructure, not on arbitrary user-supplied
   scrapers inside this repo.
-- The dashboard reads `db/wolverine.db` and `heal-log.md`. It does not expose
-  write APIs for scrape/heal over the public internet.
+- The live demo reads committed `web/public/data/scar.json` (and polls it). It
+  does **not** call Bright Data from Vercel or the browser.
+- Optional `POST /api/field/refresh` only dispatches GitHub Actions when
+  `GITHUB_PAT` is configured; without it, judges use the Actions UI.
 - The published Docker image may bundle a **sample** SQLite snapshot of public
   product fields for demo. Treat it as sample data, not a live credential store.
 - Self-heal (`bdata scraper heal`) can rewrite Studio extraction logic for a
@@ -82,7 +87,9 @@ Next.js dashboard (read-only DB + heal-log.md)
 
 ## Operational guidance
 
-- Keep `BRIGHTDATA_API_KEY` out of client-side Next.js bundles.
+- Keep `BRIGHTDATA_API_KEY` out of client-side Next.js bundles and Vercel env.
+- Optional `GITHUB_PAT` on Vercel is for Actions dispatch only; never reuse a
+  token that can read Bright Data or other unrelated secrets.
 - Do not mount production secrets into publicly shared containers.
 - Prefer least-privilege tokens and rotate after the hackathon / demo window.
 - Review `heal-log.md` and Actions logs for accidental key leakage before

@@ -1,10 +1,8 @@
 import { CasesView } from "@/components/CasesView";
-import { loadScar } from "@/lib/scar";
 
 export const metadata = { title: "Heals" };
 
 export default function AppHealsPage() {
-  const data = loadScar();
   return (
     <>
       <section className="page-hero">
@@ -15,7 +13,7 @@ export default function AppHealsPage() {
           that prove detection without breaking a collector.
         </p>
       </section>
-      <CasesView data={data} />
+      <CasesView />
     </>
   );
 }
