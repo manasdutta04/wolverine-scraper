@@ -7,8 +7,8 @@ import { ThemeToggle } from "@/components/brutalist/theme-toggle";
 import { GITHUB_REPO } from "@/lib/nav";
 
 const NAV_LINKS = [
-  { label: "Problem", href: "#problem" },
   { label: "Product", href: "#product" },
+  { label: "Problem", href: "#problem" },
   { label: "Studio", href: "#studio" },
   { label: "Proof", href: "#proof" },
 ] as const;

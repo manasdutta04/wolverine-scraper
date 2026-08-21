@@ -49,10 +49,12 @@
 }
 
 @layer base {
-  body.is-landing {
+  body.is-landing,
+  body.is-app {
     @apply bg-background text-foreground font-mono antialiased;
   }
-  body.is-landing * {
+  body.is-landing *,
+  body.is-app * {
     @apply border-border;
   }
 }

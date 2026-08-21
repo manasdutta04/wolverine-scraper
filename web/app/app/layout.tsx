@@ -1,4 +1,5 @@
 import "../app.css";
+import "../landing.css";
 import { AppShell } from "@/components/AppShell";
 import { loadScar } from "@/lib/scar";
 

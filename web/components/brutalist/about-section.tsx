@@ -189,9 +189,9 @@ export function AboutSection() {
                 transition={{ duration: 0.5, delay: 0.2, ease }}
                 className="text-2xl lg:text-3xl font-mono font-bold tracking-tight uppercase text-balance"
               >
-                Built so broken scrapers
+                Broken scrapers invent restocks.
                 <br />
-                <span className="text-[#ea580c]">cannot invent restocks</span>
+                <span className="text-[#ea580c]">We refuse to cry wolf.</span>
               </motion.h2>
 
               <motion.div
@@ -204,16 +204,13 @@ export function AboutSection() {
                 <p className="text-xs lg:text-sm font-mono text-muted-foreground leading-relaxed">
                   Makers hunt scarce boards across Adafruit, SparkFun, Pimoroni,
                   and The Pi Hut. A clone price or empty stock field looks like
-                  “back in stock” and wastes a buy. Silence is better than a
-                  false alarm.
+                  “back in stock” and wastes a buy. Judges care about self-heal
+                  — we made it visible.
                 </p>
                 <p className="text-xs lg:text-sm font-mono text-muted-foreground leading-relaxed">
-                  Wolverine drives Bright Data Scraper Studio collectors with{" "}
-                  <code className="text-foreground">
-                    create / run / heal / approve
-                  </code>
-                  , writes SQLite snapshots, then Heal Court decides release,
-                  repair, or refuse before Scar Feed speaks.
+                  Wolverine is agent-driven Scraper Studio: create, run, heal,
+                  approve. Heal Court verdicts gate every signal. Scar Feed only
+                  speaks when the batch is trusted.
                 </p>
               </motion.div>
 

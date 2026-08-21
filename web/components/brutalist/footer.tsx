@@ -32,7 +32,7 @@ export function Footer() {
             SCAR.FEED
           </span>
           <span className="text-[10px] font-mono tracking-widest text-muted-foreground">
-            {"(C) 2026 WOLVERINE · BRIGHT DATA SCRAPER STUDIO"}
+            WILL NOT CRY WOLF · BRIGHT DATA SCRAPER STUDIO
           </span>
         </div>
         <div className="flex items-center gap-6 flex-wrap">

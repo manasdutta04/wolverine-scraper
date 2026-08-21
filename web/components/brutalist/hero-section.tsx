@@ -11,6 +11,15 @@ export function HeroSection() {
   return (
     <section className="relative w-full px-12 pt-6 pb-12 lg:px-24 lg:pt-10 lg:pb-16">
       <div className="flex flex-col items-center text-center">
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.4, ease }}
+          className="text-[10px] tracking-[0.25em] uppercase text-[#ea580c] font-mono mb-4"
+        >
+          Scrape-Verse · Best Use of Bright Data
+        </motion.p>
+
         <motion.h1
           initial={{ opacity: 0, y: 30, filter: "blur(8px)" }}
           animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
@@ -43,11 +52,11 @@ export function HeroSection() {
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.45, ease }}
-          className="text-xs lg:text-sm text-muted-foreground max-w-md mb-6 leading-relaxed font-mono"
+          className="text-xs lg:text-sm text-muted-foreground max-w-lg mb-6 leading-relaxed font-mono"
         >
-          Scar Feed is restock radar for niche electronics that will not cry wolf.
-          Bright Data Scraper Studio heals when pages change. Heal Court blocks
-          false restocks before they hit the feed.
+          Scar Feed will not cry wolf. Bright Data Scraper Studio collectors
+          scrape niche electronics; Heal Court releases, repairs, or refuses —
+          so a broken scraper cannot invent a restock.
         </motion.p>
 
         <motion.div
@@ -56,6 +65,7 @@ export function HeroSection() {
           transition={{ duration: 0.5, delay: 0.6, ease }}
           whileHover={{ scale: 1.03 }}
           whileTap={{ scale: 0.97 }}
+          className="flex flex-wrap items-center justify-center gap-3"
         >
           <Link
             href="/app"

@@ -12,7 +12,7 @@ export default function AppOverviewPage() {
   return (
     <>
       <section className="page-hero">
-        <p className="eyebrow">Workspace</p>
+        <p className="eyebrow">{"// WORKSPACE"}</p>
         <h1 className="page-title">Scar Feed</h1>
         <p className="page-lede">
           Live structured output from Bright Data Scraper Studio. Heal Court
