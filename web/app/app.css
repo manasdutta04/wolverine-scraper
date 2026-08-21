@@ -1,10 +1,10 @@
-/* Product workspace chrome — denser than marketing */
+/* Product workspace chrome */
 
 .app-frame {
   display: grid;
-  grid-template-columns: 220px 1fr;
+  grid-template-columns: 260px 1fr;
   min-height: 100vh;
-  background: #000;
+  background: #050505;
   color: #fff;
 }
 
@@ -12,57 +12,85 @@
   position: sticky;
   top: 0;
   height: 100vh;
-  padding: 20px 14px;
+  padding: 22px 16px;
   border-right: 1px solid rgba(255, 255, 255, 0.08);
-  background: #0b0b0c;
+  background:
+    linear-gradient(180deg, rgba(201, 132, 58, 0.06), transparent 28%),
+    #0a0908;
   display: flex;
   flex-direction: column;
-  gap: 18px;
+  gap: 20px;
 }
 
 .app-brand {
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 4px 8px;
+  gap: 12px;
+  padding: 8px 10px;
   text-decoration: none;
   color: #fff;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: rgba(255, 255, 255, 0.02);
 }
 
 .app-brand img {
-  width: 36px;
-  height: 36px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
   background: #fff;
   object-fit: contain;
-  padding: 6px;
+  padding: 7px;
 }
 
 .app-brand strong {
   display: block;
-  font-size: 14px;
+  font-size: 15px;
+  letter-spacing: -0.02em;
 }
 
 .app-brand span {
   display: block;
+  margin-top: 2px;
   font-size: 11px;
-  color: #8e8e8e;
+  color: #9a9084;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.app-nav-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.app-nav-label {
+  margin: 0;
+  padding: 0 12px;
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #6f675c;
 }
 
 .app-nav {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 3px;
 }
 
 .app-nav a {
-  display: block;
-  padding: 10px 12px;
-  border-radius: 10px;
-  color: #a8a8a8;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 11px 12px;
+  border-radius: 12px;
+  color: #b7aea2;
   font-size: 13.5px;
   font-weight: 500;
   text-decoration: none;
+  border: 1px solid transparent;
+  position: relative;
 }
 
 .app-nav a:hover {
@@ -71,19 +99,46 @@
 }
 
 .app-nav a.active {
-  color: #000;
-  background: #fff;
+  color: #0b0a08;
+  background: #ead9c2;
+  border-color: rgba(201, 132, 58, 0.35);
+  box-shadow: 0 0 0 1px rgba(201, 132, 58, 0.15);
+}
+
+.app-nav a.active::before {
+  content: "";
+  position: absolute;
+  left: -16px;
+  top: 10px;
+  bottom: 10px;
+  width: 3px;
+  border-radius: 999px;
+  background: #c9843a;
+}
+
+.app-nav-icon {
+  width: 1.25rem;
+  text-align: center;
+  opacity: 0.85;
+  font-size: 12px;
 }
 
 .app-side-foot {
   margin-top: auto;
-  padding: 8px;
+  display: grid;
+  gap: 8px;
+  padding: 10px;
   font-size: 12px;
-  color: #8e8e8e;
+  color: #8d7f6c;
 }
 
 .app-side-foot a {
-  color: #fff;
+  color: #ead9c2;
+  text-decoration: none;
+}
+
+.app-side-foot a:hover {
+  text-decoration: underline;
 }
 
 .app-main {
@@ -97,26 +152,26 @@
   flex-wrap: wrap;
   align-items: center;
   gap: 10px;
-  padding: 14px 20px;
+  padding: 14px 22px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  background: rgba(11, 11, 12, 0.92);
+  background: rgba(8, 7, 6, 0.92);
   position: sticky;
   top: 0;
   z-index: 5;
-  backdrop-filter: blur(8px);
+  backdrop-filter: blur(10px);
 }
 
 .app-topbar .pill {
   display: inline-flex;
   align-items: center;
-  height: 28px;
-  padding: 0 10px;
+  height: 30px;
+  padding: 0 11px;
   border-radius: 999px;
   border: 1px solid rgba(255, 255, 255, 0.12);
   font-size: 11px;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.05em;
   text-transform: uppercase;
-  color: #c8c8c8;
+  color: #d2c6b4;
   font-family: "Azeret Mono", "Inter", monospace;
 }
 
@@ -130,22 +185,54 @@
   border-color: rgba(255, 107, 90, 0.35);
 }
 
+.top-pulse {
+  display: flex;
+  gap: 6px;
+  margin-left: auto;
+}
+
+.pulse-dot {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  color: #cfc3b2;
+}
+
+.pulse-dot.ok {
+  border-color: rgba(200, 225, 74, 0.4);
+  color: #c8e14a;
+}
+
+.pulse-dot.bad {
+  border-color: rgba(255, 107, 90, 0.4);
+  color: #ff6b5a;
+}
+
 .app-content {
-  padding: 22px 20px 64px;
-  width: min(1100px, 100%);
+  padding: 26px 24px 72px;
+  width: min(1120px, 100%);
 }
 
 .app-mobile-bar {
   display: none;
-  padding: 12px 16px;
+  padding: 12px 14px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   gap: 8px;
   overflow-x: auto;
+  background: #0a0908;
 }
 
 .app-mobile-bar a {
   flex: 0 0 auto;
-  padding: 8px 12px;
+  padding: 9px 13px;
   border-radius: 999px;
   border: 1px solid rgba(255, 255, 255, 0.12);
   color: #c8c8c8;
@@ -155,9 +242,9 @@
 }
 
 .app-mobile-bar a.active {
-  background: #fff;
-  color: #000;
-  border-color: #fff;
+  background: #ead9c2;
+  color: #0b0a08;
+  border-color: #ead9c2;
 }
 
 .overview-grid {
@@ -168,18 +255,18 @@
 }
 
 .overview-card {
-  padding: 16px;
+  padding: 18px;
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 16px;
-  background: #121214;
+  background: #12110e;
 }
 
 .overview-card h3 {
   margin: 0 0 10px;
-  font-size: 14px;
-  letter-spacing: 0.06em;
+  font-size: 12px;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: #8e8e8e;
+  color: #8d7f6c;
   font-weight: 500;
 }
 
@@ -203,12 +290,12 @@
   padding: 12px 14px;
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 12px;
-  background: #121214;
+  background: #12110e;
 }
 
 .studio-steps li::before {
   content: counter(step) ". ";
-  color: #8e8e8e;
+  color: #8d7f6c;
   font-variant-numeric: tabular-nums;
 }
 
@@ -228,11 +315,11 @@
   padding: 14px 16px;
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 14px;
-  background: #121214;
+  background: #12110e;
 }
 
 .collector-list code {
-  color: #8e8e8e;
+  color: #8d7f6c;
   font-size: 12px;
 }
 
@@ -251,5 +338,9 @@
 
   .overview-grid {
     grid-template-columns: 1fr;
+  }
+
+  .top-pulse {
+    margin-left: 0;
   }
 }

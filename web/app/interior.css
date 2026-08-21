@@ -354,37 +354,41 @@ button {
 .feed-item,
 .case-item {
   display: grid;
-  grid-template-columns: 88px 1fr auto;
-  gap: 14px;
+  grid-template-columns: 92px 1fr auto;
+  gap: 12px;
   align-items: start;
-  padding: 16px 0;
+  padding: 14px 0;
   border-bottom: 1px solid var(--line);
 }
 
 .feed-type,
 .case-tag {
-  font-size: 11px;
-  letter-spacing: 0.08em;
+  font-size: 10px;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--muted);
-  padding-top: 3px;
+  color: #9a9084;
+  padding-top: 4px;
+  font-weight: 600;
 }
 
 .feed-item p,
 .case-item p {
   margin: 0;
   line-height: 1.45;
+  font-size: 14.5px;
+  color: #f2ebe2;
 }
 
 .trust-chip {
-  font-size: 11px;
-  letter-spacing: 0.06em;
+  font-size: 10px;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
-  padding: 6px 10px;
+  padding: 5px 9px;
   border-radius: 999px;
   border: 1px solid var(--line);
   color: var(--muted);
   white-space: nowrap;
+  font-weight: 600;
 }
 
 .trust-chip.ok {

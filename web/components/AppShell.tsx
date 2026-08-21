@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { APP_NAV, GITHUB_REPO } from "@/lib/nav";
+import { APP_NAV, APP_NAV_GROUPS, GITHUB_REPO } from "@/lib/nav";
 import type { ScarPayload } from "@/lib/types";
 import { formatWhen } from "@/lib/format";
 
@@ -22,32 +22,41 @@ export function AppShell({
       <aside className="app-sidebar">
         <Link className="app-brand" href="/app">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/assets/logo.webp" alt="" width={36} height={36} />
+          <img src="/assets/logo.webp" alt="" width={40} height={40} />
           <div>
             <strong>Scar Feed</strong>
-            <span>product app</span>
+            <span>Wolverine · Studio</span>
           </div>
         </Link>
-        <nav className="app-nav" aria-label="App">
-          {APP_NAV.map((item) => {
-            const active =
-              item.href === "/app"
-                ? pathname === "/app"
-                : pathname.startsWith(item.href);
-            return (
-              <Link
-                key={item.id}
-                href={item.href}
-                className={active ? "active" : undefined}
-              >
-                {item.label}
-              </Link>
-            );
-          })}
-        </nav>
+
+        {APP_NAV_GROUPS.map((group) => (
+          <div key={group.label} className="app-nav-group">
+            <p className="app-nav-label">{group.label}</p>
+            <nav className="app-nav" aria-label={group.label}>
+              {group.items.map((item) => {
+                const active =
+                  item.href === "/app"
+                    ? pathname === "/app"
+                    : pathname.startsWith(item.href);
+                return (
+                  <Link
+                    key={item.id}
+                    href={item.href}
+                    className={active ? "active" : undefined}
+                  >
+                    <span className="app-nav-icon" aria-hidden>
+                      {item.icon}
+                    </span>
+                    {item.label}
+                  </Link>
+                );
+              })}
+            </nav>
+          </div>
+        ))}
+
         <div className="app-side-foot">
-          <Link href="/">← Marketing site</Link>
-          <br />
+          <Link href="/">← Marketing</Link>
           <a href={GITHUB_REPO} target="_blank" rel="noreferrer">
             Star on GitHub
           </a>
@@ -75,13 +84,23 @@ export function AppShell({
 
         <header className="app-topbar">
           <span className="pill">
-            last scrape {formatWhen(data.lastScrapedAt)}
+            scrape {formatWhen(data.lastScrapedAt)}
           </span>
-          <span className="pill ok">{trusted} trusted signals</span>
+          <span className="pill ok">{trusted} trusted</span>
           <span className={`pill ${bad ? "bad" : "ok"}`}>
-            {bad ? `${bad} store(s) held` : "all stores clear"}
+            {bad ? `${bad} held` : "court clear"}
           </span>
-          <span className="pill">{(data.pulse || []).length} collectors</span>
+          <div className="top-pulse">
+            {(data.pulse || []).map((p) => (
+              <span
+                key={p.id}
+                className={`pulse-dot ${p.trust ? "ok" : "bad"}`}
+                title={`${p.name}: ${p.verdict}`}
+              >
+                {p.name.slice(0, 2)}
+              </span>
+            ))}
+          </div>
         </header>
 
         <div className="app-content">{children}</div>

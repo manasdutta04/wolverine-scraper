@@ -5,22 +5,46 @@ export const SAMPLE_OUTPUT =
   "https://github.com/manasdutta04/wolverine-scraper/blob/main/examples/sample-output.json";
 export const ACTIONS =
   "https://github.com/manasdutta04/wolverine-scraper/actions";
+export const SHOWCASE_VIDEO =
+  "https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260809_012548_ef22562c-c0ae-4816-ad9d-f8922af4e6a7.mp4";
 
 export const MARKETING_ANCHORS = [
+  { href: "#showcase", label: "Showcase" },
   { href: "#problem", label: "Problem" },
   { href: "#product", label: "Product" },
   { href: "#studio", label: "Studio" },
   { href: "#proof", label: "Proof" },
 ] as const;
 
-export const APP_NAV = [
-  { href: "/app", label: "Overview", id: "overview" },
-  { href: "/app/feed", label: "Feed", id: "feed" },
-  { href: "/app/court", label: "Heal Court", id: "court" },
-  { href: "/app/catalog", label: "Catalog", id: "catalog" },
-  { href: "/app/heals", label: "Heals", id: "heals" },
-  { href: "/app/studio", label: "Studio", id: "studio" },
+export const APP_NAV_GROUPS = [
+  {
+    label: "Radar",
+    items: [
+      { href: "/app", label: "Overview", id: "overview", icon: "◈" },
+      { href: "/app/feed", label: "Feed", id: "feed", icon: "◎" },
+      { href: "/app/catalog", label: "Catalog", id: "catalog", icon: "☰" },
+    ],
+  },
+  {
+    label: "Studio",
+    items: [
+      { href: "/app/court", label: "Heal Court", id: "court", icon: "⚖" },
+      { href: "/app/heals", label: "Heals", id: "heals", icon: "✦" },
+      { href: "/app/studio", label: "Collectors", id: "studio", icon: "⬡" },
+    ],
+  },
 ] as const;
+
+export type AppNavItem = {
+  href: string;
+  label: string;
+  id: string;
+  icon: string;
+};
+
+export const APP_NAV: AppNavItem[] = APP_NAV_GROUPS.flatMap((g) =>
+  g.items.map((item) => ({ ...item })),
+);
 
 /** Pinned Bright Data Scraper Studio collectors — never recreate. */
 export const COLLECTORS = [

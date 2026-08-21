@@ -33,9 +33,9 @@
   <path d="M730 150 H780" stroke="#c9843a" stroke-width="2"/>
 
   <rect x="780" y="110" width="140" height="80" fill="#1c1812" stroke="#c8e14a"/>
-  <text x="792" y="140" fill="#c8e14a" font-family="monospace" font-size="13">Public UI</text>
-  <text x="792" y="162" fill="#8d7f6c" font-family="monospace" font-size="11">demo URL</text>
-  <text x="792" y="180" fill="#8d7f6c" font-family="monospace" font-size="11">Docker Hub</text>
+  <text x="792" y="140" fill="#c8e14a" font-family="monospace" font-size="13">Next.js UI</text>
+  <text x="792" y="162" fill="#8d7f6c" font-family="monospace" font-size="11">/ ? /app</text>
+  <text x="792" y="180" fill="#8d7f6c" font-family="monospace" font-size="11">Studio proof</text>
 
   <text x="40" y="260" fill="#8d7f6c" font-family="monospace" font-size="12">Trusted signals only. If Court refuses a store, Scar Feed stays quiet.</text>
 

@@ -6,14 +6,14 @@ Bright Data Scraper Studio collectors scrape Adafruit, SparkFun, Pimoroni, and T
 Scar Feed turns those snapshots into plain-English scarcity and restock signals.
 Heal Court decides **release / repair / refuse** so a broken scraper cannot invent a restock.
 
-**Live demo:** _your Vercel URL_ (Root Directory `web`) · [docs/DEPLOY.md](docs/DEPLOY.md)
+**Live demo:** [wolverine-scraper.vercel.app](https://wolverine-scraper.vercel.app) (Root Directory `web`) · [docs/DEPLOY.md](docs/DEPLOY.md)
 
 ![Architecture](docs/architecture.svg)
 
 ## Try it
 
-1. Open the **landing** (`/`) — marketing only.
-2. Click **Get Started** → enter the **app** (`/app`).
+1. Open the **landing** (`/`) — hero, field showcase video, problem → product → Studio → proof.
+2. Click **Get Started** → enter the **app** (`/app`) — Scar Feed, Heal Court, Studio collectors.
 3. Or Docker:
 
 ```bash
@@ -25,7 +25,7 @@ docker run --rm -p 3000:3000 manasdutta04/wolverine-dashboard:latest
 
 | Path | Role |
 | --- | --- |
-| `/` | Marketing landing (problem, product, Studio, proof) |
+| `/` | Marketing: hero, showcase video, problem, product, Studio, proof |
 | `/app` | Product workspace overview |
 | `/app/feed` | Scar Feed signals |
 | `/app/court` | Heal Court |
@@ -35,6 +35,15 @@ docker run --rm -p 3000:3000 manasdutta04/wolverine-dashboard:latest
 | `/contact` | Links |
 
 Legacy `/product`, `/feed`, `/court`, `/catalog`, `/case-studies` redirect into `/app/*`.
+
+## Screenshots
+
+| | |
+| --- | --- |
+| Landing hero | ![Landing](docs/screenshots/scar-feed-desktop.png) |
+| Showcase video | ![Showcase](docs/screenshots/landing-showcase.png) |
+| App workspace | ![App](docs/screenshots/scar-feed-app.png) |
+| Landing mobile | ![Mobile](docs/screenshots/scar-feed-mobile.png) |
 
 ## How Bright Data Scraper Studio is used
 
