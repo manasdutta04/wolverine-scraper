@@ -1,6 +1,6 @@
 {
   "name": "wolverine-scraper",
-  "version": "0.1.9",
+  "version": "0.1.10",
   "private": true,
   "description": "Scar Feed: restock radar for niche electronics that will not cry wolf when the scraper is lying.",
   "type": "module",
