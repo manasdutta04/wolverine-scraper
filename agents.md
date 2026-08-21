@@ -20,9 +20,9 @@ history, not just a staged demo).
 - Bright Data CLI (`@brightdata/cli`) for scraper create/run/heal/approve
 - SQLite for storing timestamped scrape snapshots (`db/wolverine.db`)
 - GitHub Actions (cron) for scheduled runs + autonomous self-heal loop
-- Next.js (or plain HTML/JS) for the dashboard: current prices/stock +
+- Next.js App Router dashboard in `web/` (Vercel): landing + Feed / Court /
+  Catalog / Case Studies / Contact as separate routes
   history chart per product, per store
-  → **now:** static multi-page `site/` (landing + Feed / Court / Catalog)
 
 ## Target stores (niche electronics/hobby - long tail, not in Bright
 Data's 800+ prebuilt library)
@@ -89,7 +89,7 @@ out of stock / backorder), product URL.
 - [x] Dashboard: current prices/stock table
 - [x] Dashboard: price history chart per product
 - [x] Scar Feed signals + Heal Court (release / repair / refuse)
-- [x] Public demo URL linked in README (GitHub Pages + Docker Hub)
-- [x] Multi-page static site (`site/` landing + interiors)
+- [x] Public demo on Vercel (Next.js `web/`) + Docker Hub
+- [x] Multi-page Next.js routes (landing / product / feed / court / catalog / case-studies / contact)
 - [ ] Demo video recorded and linked in README
 - [ ] LinkedIn post drafted for Daily Bugle track

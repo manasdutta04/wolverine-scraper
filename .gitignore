@@ -1,4 +1,5 @@
 node_modules
+web/node_modules
 .env
 .env.*
 !.env.example
@@ -12,5 +13,7 @@ node_modules
 *.db-shm
 .DS_Store
 Thumbs.db
-web/
+web/.next
+web/out
 *.log
+site/

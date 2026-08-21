@@ -1,11 +1,19 @@
 # Deploy
 
-## Live demo (GitHub Pages)
+## Live demo (Vercel)
 
-https://manasdutta04.github.io/wolverine-scraper/
+Root Directory: `web`
 
-Static site from `site/` (no build step). Workflow: `.github/workflows/pages.yml`.
-Re-export snapshot before release: `npm run scar:export`
+```bash
+cd web
+npx vercel login
+npx vercel --prod
+```
+
+After deploy, put the `https://….vercel.app` URL at the top of `README.md`.
+
+`web/public/data/scar.json` is committed so the demo runs without Bright Data credentials.
+Re-export before release: `npm run scar:export`
 
 ## Docker Hub
 
@@ -14,7 +22,7 @@ docker pull manasdutta04/wolverine-dashboard:latest
 docker run --rm -p 3000:3000 manasdutta04/wolverine-dashboard:latest
 ```
 
-## Local static server
+## Local
 
 ```bash
 npm run web:dev

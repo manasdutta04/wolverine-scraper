@@ -80,9 +80,9 @@ if (isMain) {
   const db = openDb();
   try {
     const payload = buildScarPayload(db);
-    const outDir = path.join(root, "site", "data");
+    const outDir = path.join(root, "web", "public", "data");
     fs.mkdirSync(outDir, { recursive: true });
-    // Slim export for the static demo (current rows + feed + court + heals).
+    // Slim export for the Next.js / Vercel demo (current rows + feed + court + heals).
     const slim = {
       generatedAt: payload.generatedAt,
       tagline: payload.tagline,

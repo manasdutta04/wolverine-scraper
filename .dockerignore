@@ -1,15 +1,16 @@
 .git
 .github
 .next
+web/.next
 node_modules
-web
-web/
+web/node_modules
 .env
 .env.*
 **/.DS_Store
 scrapers
 pipeline
 heal
+scar
 *.md
 !heal-log.md
 *.sqlite
@@ -20,3 +21,4 @@ heal
 *.db-wal
 *.db-shm
 !db/wolverine.db
+site

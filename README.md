@@ -6,49 +6,41 @@ Bright Data Scraper Studio collectors scrape Adafruit, SparkFun, Pimoroni, and T
 Scar Feed turns those snapshots into plain-English scarcity and restock signals.
 Heal Court decides **release / repair / refuse** so a broken scraper cannot invent a restock.
 
-**Live demo:** https://manasdutta04.github.io/wolverine-scraper/
+**Live demo:** _add Vercel URL after `npx vercel --prod` (see [docs/DEPLOY.md](docs/DEPLOY.md))_
 
 ![Architecture](docs/architecture.svg)
 
 ## Try it without cloning
 
-1. **Live demo (no install):** https://manasdutta04.github.io/wolverine-scraper/
-2. **Docker (bundled snapshot):**
+1. **Live demo (Vercel):** see URL above after deploy
+2. **Docker:**
 
 ```bash
 docker pull manasdutta04/wolverine-dashboard:latest
 docker run --rm -p 3000:3000 manasdutta04/wolverine-dashboard:latest
 ```
 
-Open http://localhost:3000
-
 3. **Demo video:** _add YouTube / Loom link here_
 
-## Site map
+## Routes
 
-| Page | What you see |
+| Path | Page |
 | --- | --- |
-| `/` | Landing (video hero) |
-| `/product.html` | Scar Feed overview |
-| `/feed.html` | Signal feed |
-| `/court.html` | Heal Court verdicts |
-| `/catalog.html` | Product catalog |
-| `/case-studies.html` | Heal journal |
-| `/contact.html` | Links (public demo, no auth) |
-
-## Screenshots
-
-| Desktop | Mobile |
-| --- | --- |
-| ![Scar Feed desktop](docs/screenshots/scar-feed-desktop.png) | ![Scar Feed mobile](docs/screenshots/scar-feed-mobile.png) |
+| `/` | Landing |
+| `/product` | Overview |
+| `/feed` | Scar Feed signals |
+| `/court` | Heal Court |
+| `/catalog` | Catalog |
+| `/case-studies` | Heal journal |
+| `/contact` | Links + Star on GitHub |
 
 ## How Bright Data Scraper Studio is used
 
 1. `bdata scraper create` built a custom collector per store (IDs pinned below - never recreate).
 2. `bdata scraper run` returns structured JSON; `npm run scrape` writes `db/wolverine.db`.
-3. Red flags (empty prices, cloned price/stock) go to **Heal Court**. Repair runs `bdata scraper heal` then `approve`. Refuse rejects the proposal when the heal preview is still cloned.
+3. Red flags go to **Heal Court**. Repair runs `bdata scraper heal` then `approve`. Refuse rejects a still-cloned preview.
 4. GitHub Actions cron scrapes + heals. Optional `simulate_failure` proves detection without changing a live collector.
-5. `npm run scar:export` writes `site/data/scar.json` for the public read-only demo (no Bright Data key on the site).
+5. `npm run scar:export` writes `web/public/data/scar.json` for the public demo (no Bright Data key on Vercel).
 
 Example output: [`examples/sample-output.json`](examples/sample-output.json) · Heal journal: [`heal-log.md`](heal-log.md)
 
@@ -59,7 +51,7 @@ flowchart TB
   pipe --> court{Heal Court}
   court -->|repair| heal[bdata heal approve]
   court -->|refuse| quiet[Suppress signals]
-  feed --> ui[Public multi-page site]
+  feed --> ui[Next.js on Vercel]
   court --> ui
 ```
 
@@ -78,18 +70,14 @@ flowchart TB
 git clone https://github.com/manasdutta04/wolverine-scraper.git
 cd wolverine-scraper
 npm install
+cd web && npm install && cd ..
 
-# optional live scrape
-export BRIGHTDATA_API_KEY=...   # never commit
-npx --yes @brightdata/cli login --api-key "$BRIGHTDATA_API_KEY"
-npm run scrape
-npm run check
-npm run heal                    # Heal Court on failures
-
-npm run scar:export             # writes site/data/scar.json
+npm run scar:export
 npm run web:dev                 # http://localhost:3000
 npm test
 ```
+
+Deploy: [docs/DEPLOY.md](docs/DEPLOY.md)
 
 ## Layout
 
@@ -99,9 +87,9 @@ npm test
 | `scrapers/` | Store registry + `bdata` runner |
 | `pipeline/` | Scrape all stores → SQLite |
 | `heal/` | Red-flag check + Court-aware heal loop |
-| `site/` | Static multi-page UI (landing + interiors) |
-| `docs/` | Architecture graph, screenshots, deploy notes |
-| `.github/workflows/` | Cron scrape/heal, Pages deploy, auto Releases |
+| `web/` | Next.js App Router UI (Vercel) |
+| `docs/` | Architecture, screenshots, deploy notes |
+| `.github/workflows/` | Cron scrape/heal + auto Releases |
 | `SECURITY.md` | Secrets and reporting |
 
 ## AI assistance
