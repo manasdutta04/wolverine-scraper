@@ -2,102 +2,48 @@
 
 ## Supported versions
 
-| Version | Supported |
-| --- | --- |
-| `main` / latest GitHub Release | Yes |
-| Older tags | Best effort only |
+We care about `main` and the latest GitHub Release. Older tags are best-effort only. When you report something, point at a recent commit if you can.
 
-Report issues against the latest commit on `main` when possible.
+## What we collect
 
-## What this project does (and does not) collect
+Wolverine only scrapes **public** product listing pages from Adafruit, SparkFun, Pimoroni, and The Pi Hut. We store product name, price, currency, stock status, and product URL in SQLite.
 
-Wolverine scrapes **public product listing pages** from niche electronics stores
-(Adafruit, SparkFun, Pimoroni, The Pi Hut). It stores product name, price,
-currency, stock status, and product URL in a local SQLite database.
+We do **not** log into those shops, pull personal data, scrape government sites, or use Bright Data’s pre-built marketplace scrapers for these targets. We also do not commit API keys, `.env` files, or a live production database.
 
-It does **not**:
+If a target becomes login-walled or otherwise off-limits, stop and pick a different page.
 
-- Log in to target sites or bypass paywalls
-- Collect personal data, accounts, or private messages
-- Scrape government websites
-- Use Bright Data's pre-built marketplace scrapers for those targets
-- Commit API keys, `.env` files, or live SQLite databases to git
-
-Public pages only. If a target becomes login-walled or otherwise restricted,
-stop and change the target.
-
-## Secrets and credentials
+## Secrets
 
 | Secret | Where it belongs | Never |
 | --- | --- | --- |
-| `BRIGHTDATA_API_KEY` | Local env / `.env` (gitignored) / GitHub Actions secrets | In commits, Vercel, client bundles, Docker Hub descriptions, demo recordings, issue text |
-| `GITHUB_PAT` (optional) | Vercel env only — `actions:write` to dispatch `wolverine-scrape` | Bright Data access; do not grant more scopes than needed |
-| Bright Data session from `bdata login` | Developer machine only | Shared or committed |
+| `BRIGHTDATA_API_KEY` | Local `.env` (gitignored) and GitHub Actions secrets | Commits, Vercel, the browser, Docker Hub blurbs, demo recordings, issues |
+| `GITHUB_PAT` (optional) | Vercel only, enough to start the scrape workflow | Anything that can read Bright Data; do not over-scope the token |
+| Bright Data CLI login session | Your machine | Shared or committed |
 
-CI uses repository secret `BRIGHTDATA_API_KEY`. The public Next.js demo may
-use optional `GITHUB_PAT` solely to trigger that workflow; scrapes and heals
-still run in Actions. Mask keys in terminal recordings. Prefer a throwaway or
-rotated key for demos.
-
-Rotate the key immediately if it appears in a log, screenshot, or public gist.
+CI scrapes with `BRIGHTDATA_API_KEY`. The public demo may use `GITHUB_PAT` only to click “run workflow” for you. Mask keys in screen recordings. Prefer a throwaway or rotated key for demos. If a key leaks, rotate it right away.
 
 ## Reporting a vulnerability
 
-Please **do not** open a public GitHub issue for security-sensitive reports
-(credential leaks, auth bypass in the dashboard, unsafe URL handling, etc.).
+Please **do not** open a public issue for credential leaks, auth bypass, or similarly sensitive bugs.
 
-1. Email the maintainer via the contact listed on the
-   [GitHub profile](https://github.com/manasdutta04) for
-   [wolverine-scraper](https://github.com/manasdutta04/wolverine-scraper), **or**
-   open a private [GitHub Security Advisory](https://github.com/manasdutta04/wolverine-scraper/security/advisories/new)
-   if enabled on the repo.
-2. Include: affected version/commit, reproduction steps, impact, and any
-   suggested fix.
-3. Allow a reasonable window for a fix before public disclosure.
+1. Email the maintainer via the contact on [GitHub](https://github.com/manasdutta04) for [wolverine-scraper](https://github.com/manasdutta04/wolverine-scraper), **or** open a private [Security Advisory](https://github.com/manasdutta04/wolverine-scraper/security/advisories/new) if the repo allows it.
+2. Include the affected commit, how to reproduce, impact, and a suggested fix if you have one.
+3. Give a reasonable window for a fix before talking about it in public.
 
-We will acknowledge reports and prioritize credential exposure and remote
-code paths first.
+We will acknowledge reports and prioritize credential exposure first.
 
 ## Trust boundaries
 
-```
-Internet (public storefront HTML)
-        │
-        ▼
-Bright Data Scraper Studio (proxies, run, heal)
-        │  BRIGHTDATA_API_KEY  (GitHub Actions / local only)
-        ▼
-Local / CI Node pipeline  →  SQLite snapshots → scar:export
-        │
-        ▼
-Next.js /app (polls scar.json; optional GITHUB_PAT → workflow_dispatch)
-```
+Bright Data Scraper Studio does the extraction (with the API key only in Actions or on a developer machine). The pipeline writes SQLite and exports `scar.json`. The public Next.js app reads that snapshot and can optionally start a GitHub Action — it never talks to Bright Data directly.
 
-- Extraction runs on Bright Data infrastructure, not on arbitrary user-supplied
-  scrapers inside this repo.
-- The live demo reads committed `web/public/data/scar.json` (and polls it). It
-  does **not** call Bright Data from Vercel or the browser.
-- Optional `POST /api/field/refresh` only dispatches GitHub Actions when
-  `GITHUB_PAT` is configured; without it, judges use the Actions UI.
-- The published Docker image may bundle a **sample** SQLite snapshot of public
-  product fields for demo. Treat it as sample data, not a live credential store.
-- Self-heal (`bdata scraper heal`) can rewrite Studio extraction logic for a
-  pinned `c_*` Collector ID. Production CI approves only after red-flag checks;
-  simulated failures reject Studio proposals so live collectors stay unchanged.
+The Docker image may include sample public product rows for demo. Treat that as sample data, not a secret store. Self-heal can change Studio extraction for a pinned collector; CI only approves after red-flag checks, and simulated failures are meant to prove detection without rewriting a live collector.
 
-## Operational guidance
+## Day-to-day habits
 
-- Keep `BRIGHTDATA_API_KEY` out of client-side Next.js bundles and Vercel env.
-- Optional `GITHUB_PAT` on Vercel is for Actions dispatch only; never reuse a
-  token that can read Bright Data or other unrelated secrets.
-- Do not mount production secrets into publicly shared containers.
-- Prefer least-privilege tokens and rotate after the hackathon / demo window.
-- Review `heal-log.md` and Actions logs for accidental key leakage before
-  sharing screen recordings.
-- Dependencies: run `npm audit` in the repo root and under `web/` when updating.
+- Keep `BRIGHTDATA_API_KEY` out of client bundles and Vercel.
+- If you set `GITHUB_PAT` on Vercel, give it only what it needs for Actions.
+- Do not bake production secrets into shared containers.
+- Skim `heal-log.md` and Actions logs before sharing a recording.
+- Run `npm audit` in the repo root and under `web/` when you bump dependencies.
 
-## Scope notes
-
-This is a hackathon / research-style tracker. The dashboard is not a hardened
-multi-tenant SaaS. Do not expose it to the open internet without your own
-auth, TLS, and network controls.
+This is a hackathon-style tracker, not a hardened multi-tenant product. Do not expose it widely without your own auth and network controls.

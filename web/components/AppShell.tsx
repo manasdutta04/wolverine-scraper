@@ -91,15 +91,19 @@ function AppShellInner({ children }: { children: React.ReactNode }) {
           <span className={`pill ${bad ? "bad" : "ok"}`}>
             {bad ? `${bad} held` : "court clear"}
           </span>
-          <div className="top-pulse">
+          <div className="top-pulse" aria-label="Collector court status">
             {(data.pulse || []).map((p) => (
-              <span
+              <Link
                 key={p.id}
-                className={`pulse-dot ${p.trust ? "ok" : "bad"}`}
-                title={`${p.name}: ${p.verdict}`}
+                href="/app/court"
+                className={`pulse-store ${p.trust ? "ok" : "bad"}`}
+                title={`${p.name}: ${p.verdict} · ${p.rows || 0} rows`}
               >
-                {p.name.slice(0, 2)}
-              </span>
+                <span className="pulse-store-name">{p.name}</span>
+                <span className="pulse-store-state">
+                  {p.trust ? "clear" : p.verdict || "held"}
+                </span>
+              </Link>
             ))}
           </div>
         </header>

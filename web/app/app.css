@@ -212,34 +212,64 @@
 
 .top-pulse {
   display: flex;
+  flex-wrap: wrap;
   gap: 6px;
   margin-left: auto;
+  justify-content: flex-end;
 }
 
-.pulse-dot {
+.pulse-store {
   display: inline-flex;
   align-items: center;
-  justify-content: center;
-  width: 28px;
+  gap: 6px;
   height: 28px;
-  border-radius: 0;
+  padding: 0 8px;
+  border: 1px solid var(--fg);
+  background: var(--bg);
+  color: var(--fg);
+  text-decoration: none;
+  font-family: var(--font-mono), monospace;
   font-size: 9px;
-  font-weight: 700;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  border: 1px solid var(--fg);
-  color: var(--fg);
-  background: var(--bg);
+  transition: background 0.12s ease, color 0.12s ease;
 }
 
-.pulse-dot.ok {
+.pulse-store:hover {
+  background: var(--fg);
+  color: var(--bg);
+}
+
+.pulse-store.ok {
   border-color: var(--accent);
-  color: var(--accent);
 }
 
-.pulse-dot.bad {
+.pulse-store.bad {
   border-color: var(--bad);
+}
+
+.pulse-store-name {
+  font-weight: 700;
+  color: inherit;
+}
+
+.pulse-store-state {
+  opacity: 0.75;
+}
+
+.pulse-store.ok .pulse-store-state {
+  color: var(--accent);
+  opacity: 1;
+}
+
+.pulse-store.bad .pulse-store-state {
   color: var(--bad);
+  opacity: 1;
+}
+
+.pulse-store:hover .pulse-store-state {
+  color: inherit;
+  opacity: 0.85;
 }
 
 .app-content {

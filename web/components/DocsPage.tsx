@@ -147,8 +147,18 @@ npx vercel --prod --cwd web`}</CodeBlock>
         <section id="local" className="docs-section">
           <DocCard title="Local pipeline">
             <p>
-              Node 20+, Bright Data CLI login. Secrets stay in local/CI — never
-              on the public site.
+              Full contributor setup lives in the repo’s{" "}
+              <a
+                href={`${GITHUB_REPO}/blob/main/CONTRIBUTING.md`}
+                target="_blank"
+                rel="noreferrer"
+              >
+                CONTRIBUTING.md
+              </a>
+              . Short version: Node 20+, install at the repo root and under{" "}
+              <code>web/</code>, export the scar snapshot, then start the Next
+              app. Bright Data login is only needed when you actually scrape or
+              heal — never on the public Vercel site.
             </p>
             <CodeBlock>{`git clone ${GITHUB_REPO}.git
 cd wolverine-scraper
