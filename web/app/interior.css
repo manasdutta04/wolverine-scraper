@@ -18,7 +18,7 @@
   --panel: #121214;
   --ok: #c8e14a;
   --bad: #ff6b5a;
-  --font-sans: "Inter", "Segoe UI", system-ui, sans-serif;
+  --font-sans: var(--font-inter), "Inter", "Segoe UI", system-ui, sans-serif;
   --font-display: "BubbledotICG-FinePos", "Geist Pixel Circle", monospace;
 }
 
