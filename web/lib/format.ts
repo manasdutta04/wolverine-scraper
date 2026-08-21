@@ -5,6 +5,7 @@ export function formatWhen(iso: string | null | undefined) {
   return new Intl.DateTimeFormat("en-GB", {
     dateStyle: "medium",
     timeStyle: "short",
+    timeZone: "Asia/Kolkata",
   }).format(d);
 }
 
