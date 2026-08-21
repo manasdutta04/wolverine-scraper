@@ -1,19 +1,26 @@
 # Deploy
 
-## Live demo (Vercel)
+## Live demo (Vercel) — primary
 
-Root Directory: `web`
+From the repo root (Root Directory = `web`):
 
 ```bash
-cd web
 npx vercel login
-npx vercel --prod
+npx vercel link --cwd web
+npx vercel --prod --cwd web
 ```
 
-After deploy, put the `https://….vercel.app` URL at the top of `README.md`.
+Paste the resulting `https://….vercel.app` URL into `README.md`.
 
-`web/public/data/scar.json` is committed so the demo runs without Bright Data credentials.
+`web/public/data/scar.json` is committed so builds need no Bright Data key.
 Re-export before release: `npm run scar:export`
+
+### Import via Vercel dashboard
+
+1. New Project → import `manasdutta04/wolverine-scraper`
+2. **Root Directory:** `web`
+3. Framework: Next.js (auto)
+4. Deploy
 
 ## Docker Hub
 
