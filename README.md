@@ -6,33 +6,35 @@ Bright Data Scraper Studio collectors scrape Adafruit, SparkFun, Pimoroni, and T
 Scar Feed turns those snapshots into plain-English scarcity and restock signals.
 Heal Court decides **release / repair / refuse** so a broken scraper cannot invent a restock.
 
-**Live demo:** _add Vercel URL after `npx vercel --prod` (see [docs/DEPLOY.md](docs/DEPLOY.md))_
+**Live demo:** _your Vercel URL_ (Root Directory `web`) · [docs/DEPLOY.md](docs/DEPLOY.md)
 
 ![Architecture](docs/architecture.svg)
 
-## Try it without cloning
+## Try it
 
-1. **Live demo (Vercel):** see URL above after deploy
-2. **Docker:**
+1. Open the **landing** (`/`) — marketing only.
+2. Click **Get Started** → enter the **app** (`/app`).
+3. Or Docker:
 
 ```bash
 docker pull manasdutta04/wolverine-dashboard:latest
 docker run --rm -p 3000:3000 manasdutta04/wolverine-dashboard:latest
 ```
 
-3. **Demo video:** _add YouTube / Loom link here_
+## Surfaces
 
-## Routes
-
-| Path | Page |
+| Path | Role |
 | --- | --- |
-| `/` | Landing |
-| `/product` | Overview |
-| `/feed` | Scar Feed signals |
-| `/court` | Heal Court |
-| `/catalog` | Catalog |
-| `/case-studies` | Heal journal |
-| `/contact` | Links + Star on GitHub |
+| `/` | Marketing landing (problem, product, Studio, proof) |
+| `/app` | Product workspace overview |
+| `/app/feed` | Scar Feed signals |
+| `/app/court` | Heal Court |
+| `/app/catalog` | Catalog |
+| `/app/heals` | Heal journal |
+| `/app/studio` | Pinned collectors + pipeline |
+| `/contact` | Links |
+
+Legacy `/product`, `/feed`, `/court`, `/catalog`, `/case-studies` redirect into `/app/*`.
 
 ## How Bright Data Scraper Studio is used
 
@@ -51,8 +53,9 @@ flowchart TB
   pipe --> court{Heal Court}
   court -->|repair| heal[bdata heal approve]
   court -->|refuse| quiet[Suppress signals]
-  feed --> ui[Next.js on Vercel]
-  court --> ui
+  feed --> app[Next.js /app]
+  court --> app
+  land[Marketing /] -->|Get Started| app
 ```
 
 ## Collectors (do not recreate)
@@ -73,23 +76,20 @@ npm install
 cd web && npm install && cd ..
 
 npm run scar:export
-npm run web:dev                 # http://localhost:3000
-npm test
+npm run web:dev
 ```
-
-Deploy: [docs/DEPLOY.md](docs/DEPLOY.md)
 
 ## Layout
 
 | Path | Role |
 | --- | --- |
-| `scar/` | Match, diff, Heal Court gate, signal builder, export, tests |
+| `scar/` | Match, diff, Heal Court gate, export, tests |
 | `scrapers/` | Store registry + `bdata` runner |
 | `pipeline/` | Scrape all stores → SQLite |
 | `heal/` | Red-flag check + Court-aware heal loop |
-| `web/` | Next.js App Router UI (Vercel) |
-| `docs/` | Architecture, screenshots, deploy notes |
-| `.github/workflows/` | Cron scrape/heal + auto Releases |
+| `web/` | Next.js: marketing `/` + product `/app` |
+| `docs/` | Architecture, deploy notes |
+| `.github/workflows/` | Cron scrape/heal + Releases |
 | `SECURITY.md` | Secrets and reporting |
 
 ## AI assistance

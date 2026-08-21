@@ -2,17 +2,10 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { GITHUB_REPO, NAV } from "@/lib/nav";
+import { GITHUB_REPO, MARKETING_ANCHORS } from "@/lib/nav";
 
-export function SiteHeader({
-  active,
-  variant = "interior",
-}: {
-  active: "home" | "product" | "cases" | "contact";
-  variant?: "landing" | "interior";
-}) {
+export function MarketingHeader() {
   const [open, setOpen] = useState(false);
-  const headerClass = variant === "landing" ? "header" : "app-header";
 
   useEffect(() => {
     document.body.classList.toggle("menu-open", open);
@@ -34,35 +27,40 @@ export function SiteHeader({
     };
   }, []);
 
-  const links = NAV.map((item) => (
-    <Link
-      key={item.id}
-      className={`nav-link${active === item.id ? " active" : ""}`}
+  const anchors = MARKETING_ANCHORS.map((item) => (
+    <a
+      key={item.href}
+      className="nav-link"
       href={item.href}
       onClick={() => setOpen(false)}
     >
       {item.label}
-    </Link>
+    </a>
   ));
 
   return (
     <>
-      <header className={headerClass}>
+      <header className="header marketing-header">
         <Link className="logo" href="/" aria-label="Home">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src="/assets/logo.webp" alt="" width={52} height={52} />
         </Link>
         <nav className="nav-pill desktop-nav" aria-label="Primary">
-          {links}
+          {anchors}
         </nav>
-        <a
-          className="sign-in desktop-signin"
-          href={GITHUB_REPO}
-          target="_blank"
-          rel="noreferrer"
-        >
-          Star on GitHub
-        </a>
+        <div className="header-actions desktop-signin">
+          <a
+            className="sign-in"
+            href={GITHUB_REPO}
+            target="_blank"
+            rel="noreferrer"
+          >
+            Star on GitHub
+          </a>
+          <Link className="cta-mini" href="/app">
+            Get Started
+          </Link>
+        </div>
         <button
           className="burger"
           type="button"
@@ -84,7 +82,7 @@ export function SiteHeader({
         aria-hidden={!open}
       />
       <div className="mobile-menu" id="mobile-menu" hidden={!open}>
-        {links}
+        {anchors}
         <a
           className="sign-in mobile-signin"
           href={GITHUB_REPO}
@@ -94,6 +92,14 @@ export function SiteHeader({
         >
           Star on GitHub
         </a>
+        <Link
+          className="sign-in mobile-signin"
+          href="/app"
+          onClick={() => setOpen(false)}
+          style={{ background: "#fff", color: "#000" }}
+        >
+          Get Started
+        </Link>
       </div>
     </>
   );

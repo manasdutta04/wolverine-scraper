@@ -1,0 +1,12 @@
+import "../app.css";
+import { AppShell } from "@/components/AppShell";
+import { loadScar } from "@/lib/scar";
+
+export default function AppLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  const data = loadScar();
+  return <AppShell data={data}>{children}</AppShell>;
+}
