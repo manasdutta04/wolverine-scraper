@@ -13,7 +13,9 @@
 
 Restock radar for niche electronics that will not cry wolf when the scraper is lying.
 
-**Live demo:** [wolverine-scraper.vercel.app](https://wolverine-scraper.vercel.app/) · [Docs](https://wolverine-scraper.vercel.app/docs) · [Demo video](https://youtu.be/_UDIV9uMk5I)
+**Live demo:** [wolverine-scraper.vercel.app](https://wolverine-scraper.vercel.app/) 
+
+**Demo video:** [Demo video](https://youtu.be/_UDIV9uMk5I)
 
 ```mermaid
 flowchart TB
