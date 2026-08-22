@@ -14,6 +14,12 @@ Restock radar for niche electronics that will not cry wolf when the scraper is l
 
 **Live demo:** [wolverine-scraper.vercel.app](https://wolverine-scraper.vercel.app/) · [Docs](https://wolverine-scraper.vercel.app/docs)
 
+## Demo video
+
+[![Demo video — Wolverine · Scar Feed](https://img.youtube.com/vi/_UDIV9uMk5I/maxresdefault.jpg)](https://youtu.be/_UDIV9uMk5I)
+
+Watch on YouTube: [youtu.be/_UDIV9uMk5I](https://youtu.be/_UDIV9uMk5I)
+
 ![Architecture](docs/architecture.svg)
 
 ## The problem

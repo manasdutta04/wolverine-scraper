@@ -91,5 +91,4 @@ out of stock / backorder), product URL.
 - [x] Scar Feed signals + Heal Court (release / repair / refuse)
 - [x] Public demo on Vercel (Next.js `web/`) + Docker Hub
 - [x] Marketing landing separate from `/app` product workspace
-- [ ] Demo video recorded and linked in README
-- [ ] LinkedIn post drafted for Daily Bugle track
+- [x] Demo video recorded and linked in README
