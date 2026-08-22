@@ -18,7 +18,7 @@ Restock radar for niche electronics that will not cry wolf when the scraper is l
 
 ## The problem
 
-Hobby electronics shops (Adafruit, SparkFun, Pimoroni, The Pi Hut) change their pages often. A normal scraper breaks, keeps running anyway, and starts showing wrong prices or stock. If you build restock alerts on that, you get false alarms — the scraper is lying, and you cry wolf.
+Hobby electronics shops (Adafruit, SparkFun, Pimoroni, The Pi Hut) change their pages often. A normal scraper breaks, keeps running anyway, and starts showing wrong prices or stock. If you build restock alerts on that, you get false alarms the scraper is lying, and you cry wolf.
 
 ## What this app does
 
@@ -47,7 +47,7 @@ flowchart TB
   pipe --> court{Heal Court}
   court -->|repair| heal[Studio heal]
   court -->|refuse| quiet[Hide signals]
-  feed --> app[/app]
+  feed --> app["/app workspace"]
   court --> app
 ```
 
