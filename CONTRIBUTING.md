@@ -13,7 +13,7 @@ npm install
 cd web && npm install && cd ..
 ```
 
-Copy `.env.example` to `.env` if you have one, and put `BRIGHTDATA_API_KEY` there for local CLI work. Never commit `.env`.
+
 
 To refresh the static snapshot the web app reads, then open the UI:
 

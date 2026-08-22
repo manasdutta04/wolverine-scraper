@@ -1,41 +1,54 @@
 # Wolverine · Scar Feed
 
+[![Scrape](https://github.com/manasdutta04/wolverine-scraper/actions/workflows/scrape.yml/badge.svg)](https://github.com/manasdutta04/wolverine-scraper/actions/workflows/scrape.yml)
+[![Release](https://github.com/manasdutta04/wolverine-scraper/actions/workflows/release.yml/badge.svg)](https://github.com/manasdutta04/wolverine-scraper/actions/workflows/release.yml)
+[![Live demo](https://img.shields.io/badge/demo-Vercel-black?logo=vercel)](https://wolverine-scraper.vercel.app/)
+[![Docker Image](https://img.shields.io/docker/v/manasdutta04/wolverine-dashboard?label=docker&logo=docker&color=2496ED)](https://hub.docker.com/r/manasdutta04/wolverine-dashboard)
+[![Docker Pulls](https://img.shields.io/docker/pulls/manasdutta04/wolverine-dashboard?logo=docker)](https://hub.docker.com/r/manasdutta04/wolverine-dashboard)
+[![Node.js](https://img.shields.io/badge/node-%3E%3D20-brightgreen?logo=nodedotjs)](https://nodejs.org/)
+[![Next.js](https://img.shields.io/badge/Next.js-15-black?logo=nextdotjs)](https://wolverine-scraper.vercel.app/)
+[![Bright Data](https://img.shields.io/badge/Bright%20Data-Scraper%20Studio-orange)](https://brightdata.com/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+
 Restock radar for niche electronics that will not cry wolf when the scraper is lying.
 
-Hobby stores like Adafruit, SparkFun, Pimoroni, and The Pi Hut change their pages all the time. Most scrapers break quietly and then start inventing prices or stock. Wolverine watches those stores with Bright Data Scraper Studio, turns the raw product data into plain-English restock signals (Scar Feed), and puts a gate in front of anything that looks broken (Heal Court). If a scrape looks wrong, the feed stays quiet until Studio is healed — so you do not get a fake “back in stock” alert.
-
-**Try it live:** [wolverine-scraper.vercel.app](https://wolverine-scraper.vercel.app/) · [in-app docs](https://wolverine-scraper.vercel.app/docs) · [deploy notes](docs/DEPLOY.md)
+**Live demo:** [wolverine-scraper.vercel.app](https://wolverine-scraper.vercel.app/) · [Docs](https://wolverine-scraper.vercel.app/docs)
 
 ![Architecture](docs/architecture.svg)
 
-## What you will see
+## The problem
 
-Open the site, then go into **`/app`**. That is the working product: a live Field Console at the top, Scar Feed signals, Heal Court for each store, a catalog of latest prices, a heal journal, and a Studio page that lists the four collectors. The marketing homepage is just the story; the app is where the scrape loop shows up.
+Hobby electronics shops (Adafruit, SparkFun, Pimoroni, The Pi Hut) change their pages often. A normal scraper breaks, keeps running anyway, and starts showing wrong prices or stock. If you build restock alerts on that, you get false alarms — the scraper is lying, and you cry wolf.
 
-You can also pull the same dashboard as a Docker image if you want it on your machine — details are in [CONTRIBUTING.md](CONTRIBUTING.md) and [docs/DEPLOY.md](docs/DEPLOY.md).
+## What this app does
+
+Wolverine scrapes those four stores, stores the product data, and turns it into a simple feed of restock / scarcity / deal signals (**Scar Feed**).
+
+Before anything goes out, **Heal Court** checks whether a store’s scrape still looks honest. If it does, the feed speaks. If it does not, that store stays quiet until Bright Data Scraper Studio heals the collector. So a broken scrape cannot invent a “back in stock.”
+
+Open **`/app`** on the live site for the real product: Field Console, Feed, Heal Court, Catalog, heal journal, and Studio. The homepage is the story; `/app` is the working tool.
 
 ![Scar Feed app](docs/screenshots/app.png)
 
-## How Bright Data Scraper Studio is used
+## How we use Bright Data Scraper Studio
 
-We did not hand-write CSS selectors for these stores. For each shop we pointed Bright Data’s Scraper Studio CLI at a real category page and asked it to pull product name, price, stock, and URL. Studio created four custom collectors (their IDs are pinned in the table below — we keep reusing them; we do not recreate scrapers every time).
+We use Bright Data’s Scraper Studio — not hand-written CSS selectors, and not their big prebuilt store library. For each shop we pointed Studio at a real category page and asked for product name, price, stock, and URL. That gave us four custom collectors (IDs below). We keep those IDs and reuse them.
 
-When a run finishes, the pipeline drops structured rows into a SQLite database. From there we build Scar Feed: short sentences about scarcity, deals, and restocks. Before those sentences go out, Heal Court looks for red flags — empty prices, cloned stock text, that kind of thing. If a store looks healthy, Court **releases** the data. If something is wrong, Court can **repair** by asking Studio to heal the collector, then approving and re-running it. If a heal preview still looks fake, Court **refuses** and that store’s signals stay suppressed until the next honest scrape.
+On a schedule, GitHub Actions runs the collectors, writes results into SQLite, and runs our heal check. If something looks broken, we ask Studio to heal, approve the fix, and scrape again. We write every heal into [`heal-log.md`](heal-log.md).
 
-All of that heavy lifting (login to Bright Data, run, heal, approve) happens in GitHub Actions on a schedule, not inside the public website. After each job we export a snapshot file the demo can read. On the live site, `/app` polls that snapshot so the feed and court stay current. Judges can hit **Run field scrape** to kick the Actions workflow; Bright Data’s API key never sits on Vercel.
+The public website never holds the Bright Data key. Actions does the scrape and heal work, then exports a snapshot the demo can read. On `/app`, judges can hit **Run field scrape** to kick that job from the UI.
 
-Sample scrape output lives in [`examples/sample-output.json`](examples/sample-output.json). Every real heal attempt is written down in [`heal-log.md`](heal-log.md).
+Sample output: [`examples/sample-output.json`](examples/sample-output.json).
 
 ```mermaid
 flowchart TB
-  studio[Scraper Studio collectors] --> pipe[Pipeline SQLite]
-  pipe --> feed[Scar Feed signals]
+  studio[Scraper Studio] --> pipe[SQLite]
+  pipe --> feed[Scar Feed]
   pipe --> court{Heal Court}
-  court -->|repair| heal[bdata heal approve]
-  court -->|refuse| quiet[Suppress signals]
-  feed --> app[Next.js /app]
+  court -->|repair| heal[Studio heal]
+  court -->|refuse| quiet[Hide signals]
+  feed --> app[/app]
   court --> app
-  land[Marketing /] -->|Get Started| app
 ```
 
 ## Collectors (do not recreate)
@@ -47,12 +60,10 @@ flowchart TB
 | Pimoroni | `c_msywj65f19rulm4cua` | https://shop.pimoroni.com/collections/raspberry-pi |
 | The Pi Hut | `c_msyx5sb61lfwvvvspd` | https://thepihut.com/collections/raspberry-pi |
 
-## Where to go next
+## More
 
-- Want to run or change the code? Start with **[CONTRIBUTING.md](CONTRIBUTING.md)**.
-- Shipping the site or wiring secrets? See **[docs/DEPLOY.md](docs/DEPLOY.md)**.
-- Keys, reporting bugs that involve secrets: **[SECURITY.md](SECURITY.md)**.
+- Local setup and contributing: [CONTRIBUTING.md](CONTRIBUTING.md)
+- Deploy / Vercel / Docker: [docs/DEPLOY.md](docs/DEPLOY.md)
+- Secrets and reporting: [SECURITY.md](SECURITY.md)
 
-## AI assistance
-
-Cursor helped write a lot of the pipeline, Scar Feed, heal loop, CI, and UI. Store choice, collector IDs, heal prompts, and what “good” looks like for a scrape were directed by the author.
+Cursor helped with a lot of the code. Store choice, collector IDs, heal prompts, and verification were directed by the author.
