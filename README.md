@@ -3,6 +3,7 @@
 [![Scrape](https://github.com/manasdutta04/wolverine-scraper/actions/workflows/scrape.yml/badge.svg)](https://github.com/manasdutta04/wolverine-scraper/actions/workflows/scrape.yml)
 [![Release](https://github.com/manasdutta04/wolverine-scraper/actions/workflows/release.yml/badge.svg)](https://github.com/manasdutta04/wolverine-scraper/actions/workflows/release.yml)
 [![Live demo](https://img.shields.io/badge/demo-Vercel-black?logo=vercel)](https://wolverine-scraper.vercel.app/)
+[![Demo video](https://img.shields.io/badge/demo-YouTube-red?logo=youtube&logoColor=white)](https://youtu.be/_UDIV9uMk5I)
 [![Docker Image](https://img.shields.io/docker/v/manasdutta04/wolverine-dashboard?label=docker&logo=docker&color=2496ED)](https://hub.docker.com/r/manasdutta04/wolverine-dashboard)
 [![Docker Pulls](https://img.shields.io/docker/pulls/manasdutta04/wolverine-dashboard?logo=docker)](https://hub.docker.com/r/manasdutta04/wolverine-dashboard)
 [![Node.js](https://img.shields.io/badge/node-%3E%3D20-brightgreen?logo=nodedotjs)](https://nodejs.org/)
@@ -12,15 +13,20 @@
 
 Restock radar for niche electronics that will not cry wolf when the scraper is lying.
 
-**Live demo:** [wolverine-scraper.vercel.app](https://wolverine-scraper.vercel.app/) · [Docs](https://wolverine-scraper.vercel.app/docs)
+**Live demo:** [wolverine-scraper.vercel.app](https://wolverine-scraper.vercel.app/) · [Docs](https://wolverine-scraper.vercel.app/docs) · [Demo video](https://youtu.be/_UDIV9uMk5I)
 
-## Demo video
+```mermaid
+flowchart TB
+  studio[Scraper Studio] --> pipe[SQLite]
+  pipe --> feed[Scar Feed]
+  pipe --> court{Heal Court}
+  court -->|repair| heal[Studio heal]
+  court -->|refuse| quiet[Hide signals]
+  feed --> app["/app workspace"]
+  court --> app
+```
 
-[![Demo video — Wolverine · Scar Feed](https://img.youtube.com/vi/_UDIV9uMk5I/maxresdefault.jpg)](https://youtu.be/_UDIV9uMk5I)
-
-Watch on YouTube: [youtu.be/_UDIV9uMk5I](https://youtu.be/_UDIV9uMk5I)
-
-![Architecture](docs/architecture.svg)
+[![Architecture diagram](https://img.shields.io/badge/architecture-full%20SVG-lightgrey)](docs/architecture.svg)
 
 ## The problem
 
@@ -45,17 +51,6 @@ On a schedule, GitHub Actions runs the collectors, writes results into SQLite, a
 The public website never holds the Bright Data key. Actions does the scrape and heal work, then exports a snapshot the demo can read. On `/app`, judges can hit **Run field scrape** to kick that job from the UI.
 
 Sample output: [`examples/sample-output.json`](examples/sample-output.json).
-
-```mermaid
-flowchart TB
-  studio[Scraper Studio] --> pipe[SQLite]
-  pipe --> feed[Scar Feed]
-  pipe --> court{Heal Court}
-  court -->|repair| heal[Studio heal]
-  court -->|refuse| quiet[Hide signals]
-  feed --> app["/app workspace"]
-  court --> app
-```
 
 ## Collectors (do not recreate)
 
