@@ -340,6 +340,64 @@
   line-height: 1.55;
 }
 
+.app-frame .table-wrap {
+  border: 2px solid var(--fg);
+  background: var(--bg);
+}
+
+.app-frame table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  color: var(--fg);
+}
+
+.app-frame table th,
+.app-frame table td {
+  text-align: left;
+  padding: 10px 12px;
+  border-bottom: 1px solid hsl(0 0% 75%);
+  vertical-align: top;
+  color: var(--fg);
+}
+
+.app-frame table th {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  background: hsl(43 23% 88%);
+}
+
+.app-frame table tr.clickable {
+  cursor: pointer;
+}
+
+.app-frame table tr.clickable:hover td {
+  background: color-mix(in srgb, var(--accent) 8%, var(--bg));
+}
+
+.app-frame table tr.selected td {
+  background: color-mix(in srgb, var(--accent) 14%, var(--bg));
+}
+
+.app-frame .mono {
+  font-variant-numeric: tabular-nums;
+  color: var(--fg);
+}
+
+.app-frame .product-link {
+  color: var(--fg);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.app-frame .product-link:hover {
+  color: var(--accent);
+  text-decoration: underline;
+}
+
 .app-frame .overview-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
