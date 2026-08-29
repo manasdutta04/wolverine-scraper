@@ -1023,3 +1023,13 @@ Self-healing failed (collector c_msywj65f19rulm4cua, status: error).
 Output written to /tmp/wolverine-bdata-1788006526706.json
 Note: the heal did not complete, but scraper c_msywj65f19rulm4cua is unchanged and still works as it did before.
 Open https://brightdata.com/cp/scrapers/c_msywj65f19rulm4cua to inspect it, or re-run `bdata scraper heal` with a sharper prompt.
+
+## 2026-08-29T20:29:57.557Z
+- collector: `c_msyvm0ar1gznj2dlrq` (adafruit)
+- what broke: adafruit: 0 rows in this run
+- heal prompt: `Adafruit listing scrape looks broken: adafruit: 0 rows in this run. Re-extract each product card's own name, numeric price, currency, stock status, and URL. Do not reuse one price/stock node for every row.`
+- outcome: Heal Court REFUSE: heal failed: Approving self-healing...
+Step: user_approval — polling (attempt 1/1500)
+Self-healing failed (collector c_msyvm0ar1gznj2dlrq, status: failed).
+Note: the heal did not complete, but scraper c_msyvm0ar1gznj2dlrq is unchanged and still works as it did before.
+Open https://brightdata.com/cp/scrapers/c_msyvm0ar1gznj2dlrq to inspect it, or re-run `bdata scraper heal` with a sharper prompt.
