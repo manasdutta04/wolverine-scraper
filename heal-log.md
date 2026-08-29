@@ -184,3 +184,27 @@ simulated entry as a live site failure.
 - **label: SIMULATED TEST RUN** - fixture data only; not a live site failure
 - heal prompt: `SparkFun listing scrape looks broken: sparkfun: 100.0% of rows share price=739.95 stock=backorder (20/20) - extraction looks locked onto one element. Re-extract each product card's own name, numeric price, currency, stock status, and URL. Do not reuse one price/stock node for every row.`
 - outcome: simulated fixture, heal call attempted, studio confirmed no live extraction issue (preview still had distinct per-card prices); rejected the proposal so the live collector is unchanged
+
+## 2026-08-29T05:50:44.888Z
+- collector: `c_msyvm0ar1gznj2dlrq` (adafruit)
+- what broke: adafruit: 0 rows in this run
+- heal prompt: `Adafruit listing scrape looks broken: adafruit: 0 rows in this run. Re-extract each product card's own name, numeric price, currency, stock status, and URL. Do not reuse one price/stock node for every row.`
+- outcome: Heal Court repair still failing after re-run: adafruit: 0 rows in this run
+
+## 2026-08-29T05:53:35.352Z
+- collector: `c_msywbl7b18fsthmxn` (sparkfun)
+- what broke: sparkfun: 0 rows in this run
+- heal prompt: `SparkFun listing scrape looks broken: sparkfun: 0 rows in this run. Re-extract each product card's own name, numeric price, currency, stock status, and URL. Do not reuse one price/stock node for every row.`
+- outcome: Heal Court repair still failing after re-run: sparkfun: 0 rows in this run
+
+## 2026-08-29T06:00:24.862Z
+- collector: `c_msywj65f19rulm4cua` (pimoroni)
+- what broke: pimoroni: 0 rows in this run
+- heal prompt: `Pimoroni listing scrape looks broken: pimoroni: 0 rows in this run. Re-extract each product card's own name, numeric price, currency, stock status, and URL. Do not reuse one price/stock node for every row.`
+- outcome: Heal Court repair still failing after re-run: pimoroni: 0 rows in this run
+
+## 2026-08-29T06:07:43.497Z
+- collector: `c_msyx5sb61lfwvvvspd` (thepihut)
+- what broke: thepihut: 0 rows in this run
+- heal prompt: `The Pi Hut listing scrape looks broken: thepihut: 0 rows in this run. Re-extract each product card's own name, numeric price, currency, stock status, and URL. Do not reuse one price/stock node for every row.`
+- outcome: Heal Court repair still failing after re-run: thepihut: 0 rows in this run
