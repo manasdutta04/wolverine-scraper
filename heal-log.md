@@ -2589,3 +2589,26 @@ Failed to start self-healing for collector c_msywj65f19rulm4cua: Error: Another 
 Output written to /tmp/wolverine-bdata-1788106618364.json
 Note: the heal did not complete, but scraper c_msywj65f19rulm4cua is unchanged and still works as it did before.
 Open https://brightdata.com/cp/scrapers/c_msywj65f19rulm4cua to inspect it, or re-run `bdata scraper heal` with a sharper prompt.
+
+## 2026-08-30T20:39:13.680Z
+- collector: `c_msyvm0ar1gznj2dlrq` (adafruit)
+- what broke: adafruit: 0 rows in this run
+- heal prompt: `Adafruit listing scrape looks broken: adafruit: 0 rows in this run. Re-extract each product card's own name, numeric price, currency, stock status, and URL. Do not reuse one price/stock node for every row.`
+- outcome: Heal Court repair still failing after re-run: adafruit: 0 rows in this run
+
+## 2026-08-30T20:40:54.456Z
+- collector: `c_msywbl7b18fsthmxn` (sparkfun)
+- what broke: sparkfun: 0 rows in this run
+- heal prompt: `SparkFun listing scrape looks broken: sparkfun: 0 rows in this run. Re-extract each product card's own name, numeric price, currency, stock status, and URL. Do not reuse one price/stock node for every row.`
+- outcome: Heal Court repair still failing after re-run: sparkfun: 0 rows in this run
+
+## 2026-08-30T20:42:48.116Z
+- collector: `c_msywj65f19rulm4cua` (pimoroni)
+- what broke: pimoroni: 0 rows in this run
+- heal prompt: `Pimoroni listing scrape looks broken: pimoroni: 0 rows in this run. Re-extract each product card's own name, numeric price, currency, stock status, and URL. Do not reuse one price/stock node for every row.`
+- outcome: Heal Court REFUSE: heal failed: Triggering self-healing...
+Failed to start self-healing for collector c_msywj65f19rulm4cua: Error: Another refactor job is still in progress
+  Status: 409
+Output written to /tmp/wolverine-bdata-1788122568116.json
+Note: the heal did not complete, but scraper c_msywj65f19rulm4cua is unchanged and still works as it did before.
+Open https://brightdata.com/cp/scrapers/c_msywj65f19rulm4cua to inspect it, or re-run `bdata scraper heal` with a sharper prompt.
